@@ -9,7 +9,7 @@ from pathlib import Path
 from sqlalchemy import text as sql
 from sqlmodel import Session, select
 
-from ..ingest.kb_loader import load_chunks
+from ..ingest.kb_loader import LOADER_VERSION, load_chunks
 from ..ingest.redact import redact
 from ..models import KbChunk, KbDocument
 from .embeddings import Embedder
@@ -41,7 +41,8 @@ def index_document(
     session: Session, path: Path, meta: dict, embedder: Embedder | None
 ) -> tuple[str, int]:
     """Index one file. Returns ("added" | "updated" | "unchanged", chunk_count). Caller commits."""
-    digest = hashlib.sha256(path.read_bytes() + json.dumps(meta, sort_keys=True).encode()).hexdigest()
+    digest = hashlib.sha256(path.read_bytes() + json.dumps(meta, sort_keys=True).encode()
+                            + LOADER_VERSION.encode()).hexdigest()
     existing = session.exec(select(KbDocument).where(KbDocument.filename == path.name)).first()
     if existing and existing.content_hash == digest:
         n = len(session.exec(select(KbChunk.id).where(KbChunk.doc_id == existing.id)).all())

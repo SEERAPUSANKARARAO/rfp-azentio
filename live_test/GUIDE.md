@@ -7,7 +7,7 @@ Use it to check the app yourself, in the browser, with the real models.
 |---|---|
 | Product | Safa Lending Cloud 6.2 (SLC), by Safa Systems |
 | Buyer | Bank Al-Wafa Islamic Finance, RFP `BWIF-RFP-2026-031` |
-| Knowledge base | 11 documents in `live_test/kb/` (45 searchable passages) |
+| Knowledge base | 11 documents in `live_test/kb/` (43 searchable passages) |
 | RFP | `live_test/rfp/BWIF_RFP-2026-031_Home_and_SME_Financing.xlsx`: 23 requirements in 6 sections |
 | Time | about 25 minutes, of which drafting is 3 to 8 |
 
@@ -61,7 +61,7 @@ cd backend && .venv/bin/python ../live_test/load_kb.py
 
 | You should see | Why |
 |---|---|
-| Sources 11, Searchable passages 45, Search mode `hybrid` | `keyword` means the local embedding model is missing; the test still works |
+| Sources 11, Searchable passages **43**, Search mode `hybrid` | `keyword` means the local embedding model is missing; the test still works |
 | Stale sources **1** (Security Whitepaper v5) | 2024 date and product v5.4 against current v6.2 |
 | Badges `redacted` on the two past responses, `never reused` on the Zahra one, `not for answers` on the internal one | the confidentiality switches |
 | The Orbit title shows **[Customer]**, not the bank's name | redaction happens when the file is indexed |

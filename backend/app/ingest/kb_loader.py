@@ -16,7 +16,7 @@ import pdfplumber
 from .chunker import split_text
 from .parsers.common import clean, is_footer
 
-_STAMP = re.compile(r"^(>\s*)?SAMPLE CONTENT", re.I)
+_STAMP = re.compile(r"^(>\s*)?(?:SAMPLE|LIVE TEST)\s+CONTENT", re.I)
 _META = re.compile(r"^Document date:", re.I)
 
 
@@ -41,39 +41,91 @@ def _skip(line: str) -> bool:
 
 
 def read_md(path: Path) -> list[RawSection]:
+    pre = RawSection("", [])  # text before the first heading: kept, indexed under the document's title
     sections: list[RawSection] = []
-    for raw in path.read_text(encoding="utf-8").splitlines():
+    cur = pre
+    for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
         line = raw.strip()
         if line.startswith("## "):
-            sections.append(RawSection(clean(line[3:]), []))
+            cur = RawSection(clean(line[3:]), [])
+            sections.append(cur)
         elif line.startswith("# ") or _skip(line):
             continue
-        elif sections:
-            if line.startswith("- "):
-                sections[-1].bullets.append(clean(line[2:]))
-            else:
-                sections[-1].lines.append(clean(line))
-    return sections
+        elif line.startswith("- "):
+            cur.bullets.append(clean(line[2:]))
+        else:
+            cur.lines.append(clean(line))
+    return ([pre] if pre.lines or pre.bullets else []) + sections
+
+
+def _cells(row) -> list[str]:
+    out: list[str] = []
+    for c in row.cells:
+        t = clean(c.text)
+        if t and (not out or out[-1] != t):  # a merged cell repeats itself in every column it spans
+            out.append(t)
+    return out
+
+
+def _table_lines(table) -> list[str]:
+    """A table as facts, one line per row. With a header row each line reads "Region: UAE; Status: Live", so a row is
+    understandable on its own when it is quoted."""
+    rows = [r for r in (_cells(r) for r in table.rows) if r]
+    if not rows:
+        return []
+    head = rows[0]
+    if len(rows) >= 2 and len(head) >= 2 and len(set(head)) == len(head) and all(len(h) <= 40 for h in head):
+        return ["; ".join(f"{h}: {v}" for h, v in zip(head, r)) for r in rows[1:]]
+    return ["; ".join(r) for r in rows]
+
+
+def _docx_blocks(d):
+    """Paragraphs and tables in the order they appear, so a table stays under the heading it sits beneath."""
+    from docx.table import Table
+    from docx.text.paragraph import Paragraph
+
+    for child in d.element.body.iterchildren():
+        if child.tag.endswith("}p"):
+            yield Paragraph(child, d)
+        elif child.tag.endswith("}tbl"):
+            yield Table(child, d)
+
+
+def _bold_heading(p, text: str) -> bool:
+    runs = [r for r in p.runs if r.text.strip()]
+    return bool(runs) and all(r.bold for r in runs) and len(text) < 100 and not text.endswith((".", ",", ";"))
 
 
 def read_docx(path: Path) -> list[RawSection]:
     d = docx.Document(str(path))
+    # Real documents often use bold text instead of Heading styles. Only when a file has no heading style at all
+    # is a short bold paragraph treated as a heading; otherwise bold is just emphasis.
+    styled = any((p.style.name if p.style is not None else "").startswith("Heading") for p in d.paragraphs)
+    pre = RawSection("", [])
     sections: list[RawSection] = []
-    for p in d.paragraphs:
-        text = clean(p.text)
-        style = p.style.name if p.style is not None else ""
+    cur = pre
+    for block in _docx_blocks(d):
+        if hasattr(block, "rows"):
+            cur.bullets.extend(_table_lines(block))
+            continue
+        text = clean(block.text)
+        style = block.style.name if block.style is not None else ""
         if not text or style == "Title" or _skip(text):
             continue
-        if style.startswith("Heading"):
-            sections.append(RawSection(text, []))
-        elif sections:
-            (sections[-1].bullets if style.startswith("List") else sections[-1].lines).append(text)
-    return sections
+        if style.startswith("Heading") or (not styled and _bold_heading(block, text)):
+            cur = RawSection(text, [])
+            sections.append(cur)
+        elif style.startswith("List"):
+            cur.bullets.append(text)
+        else:
+            cur.lines.append(text)
+    return ([pre] if pre.lines or pre.bullets else []) + sections
 
 
 def read_pdf(path: Path) -> list[RawSection]:
     sections: list[RawSection] = []
-    in_bullet = False
+    cur: RawSection | None = None
+    seen_heading = in_bullet = False
     with pdfplumber.open(str(path)) as pdf:
         for page in pdf.pages:
             for line in page.extract_text_lines(return_chars=True):
@@ -82,21 +134,26 @@ def read_pdf(path: Path) -> list[RawSection]:
                     continue
                 bold = line["chars"] and all("Bold" in c.get("fontname", "") for c in line["chars"])
                 if bold and len(text) < 100:
-                    sections.append(RawSection(text, [], page.page_number))
-                    in_bullet = False
-                elif sections and text.startswith(("\u2022", "\u00b7")):
-                    sections[-1].bullets.append(text.lstrip("\u2022\u00b7 ").strip())
+                    cur = RawSection(text, [], page.page_number)
+                    sections.append(cur)
+                    seen_heading, in_bullet = True, False
+                    continue
+                # No heading yet (or none at all): text still counts, one section per page so a citation names its page.
+                if cur is None or (not seen_heading and cur.page != page.page_number):
+                    cur = RawSection("", [], page.page_number)
+                    sections.append(cur)
+                if text.startswith(("\u2022", "\u00b7")):
+                    cur.bullets.append(text.lstrip("\u2022\u00b7 ").strip())
                     in_bullet = True
-                elif sections:
-                    # a wrapped second line belongs to the bullet above it, not to the section's prose
-                    if in_bullet and sections[-1].bullets and not text[:1].isupper():
-                        sections[-1].bullets[-1] += " " + text
-                    else:
-                        sections[-1].lines.append(text)
-                        in_bullet = False
-    return sections
+                elif in_bullet and cur.bullets and not text[:1].isupper():
+                    cur.bullets[-1] += " " + text  # a wrapped second line belongs to the bullet above it
+                else:
+                    cur.lines.append(text)
+                    in_bullet = False
+    return [x for x in sections if x.lines or x.bullets]
 
 
+LOADER_VERSION = "2"  # part of what decides a file has changed: a better reader re-indexes files it improves
 _READERS = {".md": read_md, ".txt": read_md, ".docx": read_docx, ".pdf": read_pdf}
 
 
@@ -126,11 +183,12 @@ def load_chunks(
             pieces += split_text(b)
         if not pieces:
             continue
+        heading = sec.heading or fallback_heading or "Introduction"
         for piece in pieces:
-            text = f"{sec.heading}\n{piece}"
+            text = f"{heading}\n{piece}"
             if redact_fn:
                 text = redact_fn(text, customer)
-            location = f"p.{sec.page}, {sec.heading}" if sec.page else sec.heading
+            location = f"p.{sec.page}, {heading}" if sec.page else heading
             chunks.append(ChunkDraft(len(chunks), text, redact_fn(location, customer) if redact_fn else location,
                                      sec.page))
     if not chunks and fallback_heading:  # no headings to split on: index the whole text under the title

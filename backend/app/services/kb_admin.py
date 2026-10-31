@@ -77,7 +77,9 @@ def add_document(session: Session, filename: str, data: bytes, meta: dict, embed
     if clean["kind"] in (enums.KB_PAST_RFP, enums.KB_SOW) and not clean["customer"]:
         warnings.append("This looks like customer work but no customer name was given, so nothing is redacted.")
     if chunks == 0:
-        warnings.append("No text could be extracted (is it a scanned PDF?). Nothing was indexed.")
+        hint = (" If this is a scanned PDF, its pages are pictures with no text to read, and there is no OCR."
+                if suffix == ".pdf" else " The file has no readable text.")
+        warnings.append("No text could be extracted." + hint + " Nothing was indexed.")
     doc = session.exec(select(KbDocument).where(KbDocument.filename == name)).one()
     audit.record(session, "kb_document", f"document_{action}", entity_id=doc.id, actor=actor,
                  payload={"title": doc.title, "kind": kind, "chunks": chunks, "warnings": warnings})
