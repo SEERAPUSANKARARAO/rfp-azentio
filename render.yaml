@@ -1,0 +1,30 @@
+# Render blueprint for the backend. The frontend is deployed separately on Vercel (see docs/deployment.md).
+#
+# This is the FREE plan: the disk is wiped on every restart and deploy, the service sleeps after about 15 minutes without
+# traffic, and there are 512 MB of memory, so the embedding model is switched off (keyword-only search). To keep data and
+# use the embedding model, see "Keeping your data" in docs/deployment.md.
+services:
+  - type: web
+    name: rfp-ai-api
+    runtime: python
+    plan: free
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: false  # a deploy wipes the free plan's data, so it happens when you press the button, not on every push
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: EMBEDDINGS_ENABLED
+        value: "false"
+      # Every Vercel deployment of the frontend may call the API. Tighten to your exact address with CORS_ORIGINS later.
+      - key: CORS_ORIGIN_REGEX
+        value: https://.*\.vercel\.app
+      # You type these into Render yourself. They are never stored in the repository.
+      - key: GEMINI_API_KEYS
+        sync: false
+      - key: GROQ_API_KEYS
+        sync: false
+      - key: OPENROUTER_API_KEYS
+        sync: false
+      # To require an access key, add APP_ACCESS_KEY on the Environment page after the first deploy.

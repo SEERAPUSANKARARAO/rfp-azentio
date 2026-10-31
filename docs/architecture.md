@@ -260,7 +260,7 @@ aliases such as `groq#2`.
 
 | Check | Result |
 |---|---|
-| Backend tests (offline, no keys) | 479 passing: parsers, retrieval, validator, gateway failover, review, export, chat |
+| Backend tests (offline, no keys) | 489 passing: parsers, retrieval, validator, gateway failover, review, export, chat |
 | Live evaluation, 74 sample requirements, 3 formats | 73/74 as scored; 74/74 after correcting one over-literal check; **72/74 against the original stricter key** |
 | Independent audit of saved answers (verbatim quotes, every sentence cited, no names, no forbidden source) | 0 failures in the last two runs. It caught a real validator bug in run 1 |
 | Real-browser end-to-end (Chrome via Playwright) | 31/31 steps, including WCAG AA contrast in light and dark and a phone-width layout. Re-run after the latest changes |

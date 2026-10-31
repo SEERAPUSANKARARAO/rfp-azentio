@@ -69,7 +69,9 @@ def get_embedder() -> Embedder | None:
     global _embedder, _checked
     if not _checked:
         s = get_settings()
-        if model_is_cached(s.embedding_model, s.models_dir):
+        if not s.embeddings_enabled:
+            log.info("embeddings are switched off (EMBEDDINGS_ENABLED=false); retrieval is keyword-only")
+        elif model_is_cached(s.embedding_model, s.models_dir):
             _embedder = FastEmbedder(s.embedding_model, s.models_dir)
         else:
             log.warning("embedding model not cached; retrieval is keyword-only. "

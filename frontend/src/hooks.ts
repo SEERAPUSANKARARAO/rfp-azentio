@@ -1,7 +1,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  http, type Checklist, type GapsSummary, type MatrixResponse, type Readiness, type Workflow, type Answer, type AuditEvent, type Clarification, type Conflict, type Job, type KbDoc, type KbStatus,
+  http, streamUrl, type Checklist, type GapsSummary, type MatrixResponse, type Readiness, type Workflow, type Answer, type AuditEvent, type Clarification, type Conflict, type Job, type KbDoc, type KbStatus,
   type LlmStatus, type RfpDetail, type RfpSummary, type Summary,
 } from "./api";
 
@@ -84,7 +84,7 @@ export function useJob(rfpId: number) {
 
   useEffect(() => {
     if (status !== "running" || typeof EventSource === "undefined") return;
-    const es = new EventSource(`/api/rfps/${rfpId}/events`);
+    const es = new EventSource(streamUrl(`/rfps/${rfpId}/events`));
     es.onopen = () => setLive(true);
     es.onmessage = (e) => {
       try {

@@ -1,4 +1,42 @@
-// Typed client for the RFP AI backend. Everything goes through /api (proxied to :8000 in dev).
+// Typed client for the RFP AI backend. In development everything goes through /api (proxied to :8000). In production the
+// page and the API live at different addresses, and VITE_API_URL names the backend (no trailing slash).
+export const API_BASE = ((import.meta.env.VITE_API_URL as string | undefined) ?? "").replace(/\/+$/, "");
+const KEY_NAME = "rfpai.accessKey";
+
+/** The shared access key, kept for this browser tab only. Empty when the backend does not ask for one. */
+export function getAccessKey(): string {
+  try {
+    return sessionStorage.getItem(KEY_NAME) ?? "";
+  } catch {
+    return "";
+  }
+}
+export function setAccessKey(value: string) {
+  try {
+    if (value) sessionStorage.setItem(KEY_NAME, value);
+    else sessionStorage.removeItem(KEY_NAME);
+  } catch {
+    /* storage blocked: the key then has to be entered again on every page load */
+  }
+}
+export const apiUrl = (path: string) => `${API_BASE}/api${path}`;
+
+/** The progress stream cannot set headers, so the key travels in the address. */
+export function streamUrl(path: string): string {
+  const k = getAccessKey();
+  return apiUrl(path) + (k ? `?access_key=${encodeURIComponent(k)}` : "");
+}
+
+function authHeaders(extra?: Record<string, string>): Record<string, string> | undefined {
+  const k = getAccessKey();
+  const all = { ...extra, ...(k ? { "X-Access-Key": k } : {}) };
+  return Object.keys(all).length ? all : undefined;
+}
+
+/** A refused key sends the person back to the prompt, wherever in the app they were. */
+function refused(status: number) {
+  if (status === 401) window.dispatchEvent(new Event("rfpai:auth"));
+}
 
 export class ApiError extends Error {
   constructor(public status: number, public detail: unknown, message: string) {
@@ -15,12 +53,13 @@ function messageOf(detail: unknown, status: number): string {
 
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   const isForm = typeof FormData !== "undefined" && body instanceof FormData;
-  const res = await fetch(`/api${path}`, {
+  const res = await fetch(apiUrl(path), {
     method,
-    headers: body !== undefined && !isForm ? { "Content-Type": "application/json" } : undefined,
+    headers: authHeaders(body !== undefined && !isForm ? { "Content-Type": "application/json" } : undefined),
     body: body === undefined ? undefined : isForm ? (body as FormData) : JSON.stringify(body),
   });
   if (!res.ok) {
+    refused(res.status);
     let detail: unknown = null;
     try {
       detail = (await res.json()).detail;
@@ -42,8 +81,9 @@ export const http = {
 
 /** POST that returns a file. Returns the blob, the server's file name and whether it is a DRAFT copy. */
 export async function download(path: string): Promise<{ blob: Blob; filename: string; draft: boolean }> {
-  const res = await fetch(`/api${path}`, { method: "POST" });
+  const res = await fetch(apiUrl(path), { method: "POST", headers: authHeaders() });
   if (!res.ok) {
+    refused(res.status);
     let detail: unknown = null;
     try {
       detail = (await res.json()).detail;
@@ -58,8 +98,11 @@ export async function download(path: string): Promise<{ blob: Blob; filename: st
 }
 
 export async function downloadGet(path: string): Promise<{ blob: Blob; filename: string }> {
-  const res = await fetch(`/api${path}`);
-  if (!res.ok) throw new ApiError(res.status, null, `Request failed (${res.status})`);
+  const res = await fetch(apiUrl(path), { headers: authHeaders() });
+  if (!res.ok) {
+    refused(res.status);
+    throw new ApiError(res.status, null, `Request failed (${res.status})`);
+  }
   const m = /filename="?([^";]+)"?/.exec(res.headers.get("content-disposition") ?? "");
   return { blob: await res.blob(), filename: m?.[1] ?? "file" };
 }

@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .access import AccessKeyMiddleware
 from .config import get_settings
 from .db import get_engine
 from .routers import agent, assessment, chat, export, kb, review, rfps, system
@@ -19,11 +20,15 @@ async def lifespan(_: FastAPI):
 def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(title="RFP AI", version="0.1.0", lifespan=lifespan)
+    # Added first, so CORS wraps it: a refused request still carries CORS headers and the browser can read the 401.
+    app.add_middleware(AccessKeyMiddleware, key=settings.app_access_key)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[o.strip() for o in settings.cors_origins.split(",") if o.strip()],
+        allow_origin_regex=settings.cors_origin_regex or None,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["Content-Disposition", "X-Export-Draft"],  # a page on another origin cannot read these otherwise
     )
     app.include_router(system.router, prefix="/api")
     app.include_router(rfps.router, prefix="/api")

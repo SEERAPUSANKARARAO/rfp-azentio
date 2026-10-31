@@ -42,6 +42,14 @@ class Settings(BaseSettings):
     review_confidence: float = 0.7  # below this an answer is routed to review
     vendor_name: str = "Vendor"  # fills <VendorName> in the RFP's required file name
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    # A pattern for origins that may call the API, such as https://.*\.vercel\.app so every Vercel deployment of the
+    # frontend works. CORS only controls what a browser lets a page read; it is not a login.
+    cors_origin_regex: str = ""
+    # When set, every /api request except /api/health must carry this key (header X-Access-Key). Empty means open.
+    app_access_key: str = ""
+    # False runs keyword-only search and never loads the embedding model, which uses far less memory (about 250 MB
+    # instead of 410 MB), for hosts with 512 MB.
+    embeddings_enabled: bool = True
 
     def keys_for(self, provider: str) -> list[str]:
         raw = getattr(self, f"{provider}_api_keys", "")

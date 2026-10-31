@@ -14,6 +14,7 @@ def health() -> dict:
     return {
         "status": "ok",
         "keys_configured": {p: len(s.keys_for(p)) for p in ("gemini", "groq", "openrouter")},
+        "access_key_required": bool(s.app_access_key),  # lets the app ask for the key before anything else fails
     }
 
 

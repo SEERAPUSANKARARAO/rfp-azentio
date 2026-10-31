@@ -27,7 +27,7 @@ the app yourself in the browser with the real models.
 | Level 2: response schemes read from the RFP, capability classification (standard / configuration / development / third party / not available) checked against the cited text, gap analysis (confirmed gap vs knowledge gap, with owners), requirement reading (dependencies, components, unclear and contradicting wording), ranked clarifications, review gate and submission checklist, workflow board, redraft-without-touching-approved | built, tested live (see "Level 2") |
 | Not built | connector cards (Confluence, Notion, Drive, Jira), approved-answer library feedback loop, login and roles, OCR, Arabic |
 
-Offline test suite: 479 tests, no network or keys needed. Browser check: 31 steps in real Chrome (`e2e/browser_check.py`).
+Offline test suite: 489 tests, no network or keys needed. Browser check: 31 steps in real Chrome (`e2e/browser_check.py`).
 
 ## How the agent keeps answers honest
 
@@ -118,6 +118,12 @@ planted gaps found (the first run scored 14 of 16 and 7 of 10, and exposed four 
 both the documents and the expectations, and tuned rules after the first run, so this is not an independent test. Steps and
 expected outcomes: [`live_test/GUIDE_LEVEL2.md`](live_test/GUIDE_LEVEL2.md). Design: [`docs/architecture.md`](docs/architecture.md).
 Browser check: `e2e/level2_check.py` (12 steps, run on a drafted Level 2 RFP).
+
+## Putting it live
+
+Backend on Render, frontend on Vercel: [`docs/deployment.md`](docs/deployment.md). The repository holds `render.yaml` for
+Render and `frontend/vercel.json` for Vercel. The free Render plan sleeps when idle, forgets its data on every restart, and
+runs keyword-only search to fit in 512 MB. An optional shared access key (`APP_ACCESS_KEY`) protects the site.
 
 ## Setup
 
