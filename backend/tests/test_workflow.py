@@ -142,3 +142,44 @@ async def test_the_requirements_are_read_once_not_on_every_run_or_redraft(env):
     assert sum(t == "structure" for t, _ in gw.calls) == 1
     with Session(env) as s:
         assert all(r.interpretation for r in s.exec(select(Requirement)).all())
+
+
+async def test_a_redraft_requested_while_the_run_is_assessing_is_not_lost(env):
+    # Found by the browser check: two conflicts resolved back to back. The second request joined the running job, but the job
+    # had already left its drafting loop (it was assessing), so nobody ever redrafted the answer and it stayed queued.
+    ids = import_sample(env, XLSX, {"1.1", "1.2"})
+    fired = []
+
+    def script(task, prompt, n):
+        if task == "assess" and not fired:
+            fired.append(1)
+            with Session(env) as s:  # what start_recalc does when it finds a run in progress
+                s.exec(select(Answer).where(Answer.requirement_id == ids["1.1"])).one().review_status = enums.REVIEW_QUEUED
+                s.commit()
+            jobs._recalc_queue.setdefault(ids["_rfp"], set()).add(ids["1.1"])
+        return LLMError("x") if task in ("fast", "structure", "assess") else grounded(prompt)
+
+    gw = FakeGateway(script)
+    await run_job(env, gw, ids["_rfp"], concurrency=1, assess=True)
+    assert answer(env, ids["1.1"]).review_status == enums.REVIEW_DRAFTED  # redrafted, not left queued
+    assert len(gw.drafts()) == 3  # two first drafts and the one redraft
+    assert not jobs._recalc_queue.get(ids["_rfp"])
+
+
+async def test_a_run_is_not_reported_done_until_everything_it_does_has_finished(env):
+    # A page that is told "done" stops watching, so it must not be told while clarifications, the assessment or a
+    # redraft are still to come.
+    ids = import_sample(env, XLSX, {"1.1", "1.2"})
+    seen = []
+
+    def script(task, prompt, n):
+        if task == "assess":
+            with Session(env) as s:
+                seen.append(jobs.latest_job(s, ids["_rfp"]).status)
+        return LLMError("x") if task in ("fast", "structure", "assess") else grounded(prompt)
+
+    await run_job(env, FakeGateway(script), ids["_rfp"], concurrency=1, assess=True)
+    assert seen and set(seen) == {"running"}  # still running while it assessed
+    with Session(env) as s:
+        j = jobs.latest_job(s, ids["_rfp"])
+        assert j.status == "done" and j.message.startswith("Drafted 2 of 2")

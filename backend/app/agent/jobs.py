@@ -33,6 +33,7 @@ _running: dict[int, asyncio.Task] = {}
 # which also covers an answer that was already being drafted from the old evidence when the request arrived.
 _recalc_queue: dict[int, set[int]] = {}
 MAX_PASSES = 6
+MAX_ROUNDS = 5  # how many times a run goes back to drafting because requests arrived while it was finishing
 
 
 def _now() -> datetime:
@@ -96,6 +97,7 @@ async def run_job(
     job_id: int | None = None,
     auto_resume_wait_s: float = AUTO_RESUME_MAX_WAIT_S,
     assess: bool = False,
+    _round: int = 0,
 ) -> int:
     s = get_settings()
     if job_id is None:
@@ -180,6 +182,7 @@ async def run_job(
         _set_message(engine, job_id, f"Waiting for LLM quota (back about {resume_clock}), then continuing")
         await asyncio.sleep(max(wait, 0) + 2)
 
+    base_message = ""
     with Session(engine) as session:
         j = session.get(Job, job_id)
         rfp = session.get(Rfp, rfp_id)
@@ -193,24 +196,46 @@ async def run_job(
                          + f". {j.total - j.done} requirement(s) still queued.")
             rfp.status = "paused"
         else:
-            j.status = enums.JOB_DONE
-            j.message = (f"Drafted {j.done} of {j.total}" + (f"; {errors} failed" if errors else "")
-                         + (f"; waited out {resumes} quota pause(s)" if resumes else ""))
+            # Not "done" yet. Clarifications, the assessment and any redraft requested meanwhile still follow, and a page
+            # that was told "done" would stop watching and keep showing numbers from before they finished.
+            base_message = (f"Drafted {j.done} of {j.total}" + (f"; {errors} failed" if errors else "")
+                            + (f"; waited out {resumes} quota pause(s)" if resumes else ""))
+            j.message = base_message
             rfp.status = "ready"
         j.updated_at = _now()
         session.commit()
+    if stop:
+        return job_id
 
-    if not stop:  # the gap list is only complete once every requirement has an answer
-        await build_clarifications(engine, gateway, rfp_id)
+    again = False
+    note = ""
+    try:
+        await build_clarifications(engine, gateway, rfp_id)  # the gap list is only complete once every requirement has an answer
         if assess:  # Level 2: classify each answer's capability and find the gaps. Best effort: drafts are already saved
-            _set_message(engine, job_id, "Drafting finished. Assessing capabilities and gaps")
+            _set_message(engine, job_id, f"{base_message}. Assessing capabilities and gaps")
             res = await assess_rfp(engine, gateway, rfp_id)
-            note = (f"Assessed {res.get('assessed', 0)} requirement(s)"
+            note = (f". Assessed {res.get('assessed', 0)} requirement(s)"
                     + ("; quota ran out, run the assessment again to finish" if res.get("quota_exhausted") else "")
                     + (f"; {res['failed']} failed" if res.get("failed") else ""))
+        # A redraft requested while we were building clarifications or assessing joined this run, but the drafting loop
+        # had already ended, so nothing would ever pick it up. Look again, and draft again with the same job.
+        if _round < MAX_ROUNDS:
+            with Session(engine) as session:
+                for rid in _recalc_queue.pop(rfp_id, set()):
+                    ans = session.exec(select(Answer).where(Answer.requirement_id == rid)).first()
+                    if ans is not None:
+                        ans.review_status, ans.reviewed_at = enums.REVIEW_QUEUED, None
+                session.commit()
+                more = [i for i in pending_requirement_ids(session, rfp_id) if i not in failed]
+            if more:
+                again = True
+                return await run_job(engine, gateway, rfp_id, concurrency=concurrency, job_id=job_id,
+                                     auto_resume_wait_s=auto_resume_wait_s, assess=assess, _round=_round + 1)
+    finally:
+        if not again:  # the run says it is finished only now, whatever happened on the way
             with Session(engine) as session:
                 j = session.get(Job, job_id)
-                j.message, j.updated_at = f"{j.message}. {note}", _now()
+                j.status, j.message, j.updated_at = enums.JOB_DONE, base_message + note, _now()
                 session.commit()
     return job_id
 
