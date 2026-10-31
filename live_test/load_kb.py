@@ -23,9 +23,12 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--api", default="http://localhost:8000")
     ap.add_argument("--no-conflicts", action="store_true")
+    ap.add_argument("--level2", action="store_true", help="also load the extra document the Level 2 RFP needs")
     args = ap.parse_args()
 
-    meta = json.loads((HERE / "kb_metadata.json").read_text(encoding="utf-8"))
+    meta = [{**m, "dir": "kb"} for m in json.loads((HERE / "kb_metadata.json").read_text(encoding="utf-8"))]
+    if args.level2:
+        meta += [{**m, "dir": "kb_level2"} for m in json.loads((HERE / "kb_metadata_level2.json").read_text(encoding="utf-8"))]
     base = args.api.rstrip("/") + "/api"
     with httpx.Client(timeout=120) as http:
         have = {d["title"] for d in http.get(f"{base}/kb/documents").json()}
@@ -38,7 +41,7 @@ def main() -> int:
                     "owner": m["owner"], "customer": m["customer"],
                     "reuse_permitted": str(m["reuse_permitted"]).lower(), "answerable": str(m["answerable"]).lower(),
                     "reviewer": "live-test"}
-            path = HERE / "kb" / m["file"]
+            path = HERE / m["dir"] / m["file"]
             r = http.post(f"{base}/kb/documents", data=form, files={"file": (m["file"], path.read_bytes())})
             if r.status_code != 201:
                 print(f"  FAILED          {m['file']}: {r.status_code} {r.text[:200]}")

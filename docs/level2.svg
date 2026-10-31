@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 561" width="1200" height="561" font-family="'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">From requirements to a submission-ready response</title><desc id="d">Read the requirements, draft and validate, assess capability, then a response code in the RFP&#x27;s own scheme, a gap analysis and ranked clarification questions, all feeding a review gate, the workflow, and export with a checklist.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="1200" height="561" fill="#ffffff"/>
+<rect x="20" y="14" width="360" height="153" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="32" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">1  Read the requirements</text>
+<rect x="323" y="21" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="347.5" y="34" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="32" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">Rules find cross-references, vague words, a</text>
+<text x="32" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">quantity with no number, and documents we were</text>
+<text x="32" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">not given. Two requirements that cannot both be</text>
+<text x="32" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">met, such as different hosting countries, are</text>
+<text x="32" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">found by rule. A model adds implied</text>
+<text x="32" y="131" font-size="12" fill="#1f1f1f" text-anchor="start">dependencies, the components each touches, and</text>
+<text x="32" y="147" font-size="12" fill="#1f1f1f" text-anchor="start">other contradictions.</text>
+<rect x="420" y="14" width="360" height="153" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="432" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">2  Draft and validate</text>
+<text x="432" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">The Level 1 pipeline: owner triage, retrieval,</text>
+<text x="432" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">one model call per requirement, then code checks</text>
+<text x="432" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">every statement against its cited text. A</text>
+<text x="432" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">customer&#x27;s reply to a question becomes part of</text>
+<text x="432" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">the requirement on the next redraft.</text>
+<rect x="820" y="14" width="360" height="153" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="832" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">3  Assess capability</text>
+<rect x="1123" y="21" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="1147.5" y="34" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="832" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">For each part of a requirement: standard,</text>
+<text x="832" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">configuration, development, third party or not</text>
+<text x="832" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">available. The quote must be in the passage and</text>
+<text x="832" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">the passage must say it. Unproven parts become</text>
+<text x="832" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">unknown, and the least favourable evidenced part</text>
+<text x="832" y="131" font-size="12" fill="#1f1f1f" text-anchor="start">decides.</text>
+<rect x="20" y="219" width="360" height="121" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="32" y="241" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">4  Clarification questions</text>
+<text x="32" y="256" font-size="12" fill="#1f1f1f" text-anchor="start">Unclear requirements and missing evidence become</text>
+<text x="32" y="272" font-size="12" fill="#1f1f1f" text-anchor="start">questions, merged where they overlap and ranked</text>
+<text x="32" y="288" font-size="12" fill="#1f1f1f" text-anchor="start">by what the answer could change: price, design,</text>
+<text x="32" y="304" font-size="12" fill="#1f1f1f" text-anchor="start">delivery or compliance.</text>
+<rect x="420" y="219" width="360" height="121" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="432" y="241" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">5  Gap analysis</text>
+<text x="432" y="256" font-size="12" fill="#1f1f1f" text-anchor="start">A confirmed product gap (the sources say no) is</text>
+<text x="432" y="272" font-size="12" fill="#1f1f1f" text-anchor="start">kept apart from a knowledge gap (the sources are</text>
+<text x="432" y="288" font-size="12" fill="#1f1f1f" text-anchor="start">silent). Also development, integration, security</text>
+<text x="432" y="304" font-size="12" fill="#1f1f1f" text-anchor="start">and documentation gaps, each with a suggested</text>
+<text x="432" y="320" font-size="12" fill="#1f1f1f" text-anchor="start">owner.</text>
+<rect x="820" y="219" width="360" height="121" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="832" y="241" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">6  Response code</text>
+<text x="832" y="256" font-size="12" fill="#1f1f1f" text-anchor="start">The RFP&#x27;s own scheme, read from its</text>
+<text x="832" y="272" font-size="12" fill="#1f1f1f" text-anchor="start">instructions. A code means what its label says,</text>
+<text x="832" y="288" font-size="12" fill="#1f1f1f" text-anchor="start">not its letter. None for unknown, none while any</text>
+<text x="832" y="304" font-size="12" fill="#1f1f1f" text-anchor="start">part is unevidenced, and a person validates</text>
+<text x="832" y="320" font-size="12" fill="#1f1f1f" text-anchor="start">anything incomplete.</text>
+<rect x="20" y="392" width="360" height="121" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="32" y="414" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">7  Review gate</text>
+<text x="32" y="429" font-size="12" fill="#1f1f1f" text-anchor="start">Blocks review on unsupported claims (also in</text>
+<text x="32" y="445" font-size="12" fill="#1f1f1f" text-anchor="start">edited text), answers that contradict each</text>
+<text x="32" y="461" font-size="12" fill="#1f1f1f" text-anchor="start">other, codes that disagree with their</text>
+<text x="32" y="477" font-size="12" fill="#1f1f1f" text-anchor="start">explanation, and mandatory requirements nobody</text>
+<text x="32" y="493" font-size="12" fill="#1f1f1f" text-anchor="start">owns. Proceeding anyway needs a recorded reason.</text>
+<rect x="420" y="392" width="360" height="121" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="432" y="414" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">8  Workflow</text>
+<text x="432" y="429" font-size="12" fill="#1f1f1f" text-anchor="start">Who has what, and what is waiting on the</text>
+<text x="432" y="445" font-size="12" fill="#1f1f1f" text-anchor="start">customer. Redraft what changed and leave</text>
+<text x="432" y="461" font-size="12" fill="#1f1f1f" text-anchor="start">approved answers as they are, marked for a re-</text>
+<text x="432" y="477" font-size="12" fill="#1f1f1f" text-anchor="start">check.</text>
+<rect x="820" y="392" width="360" height="121" rx="8" fill="#f7f7f7" stroke="#9a9a9a" stroke-width="1.5"/>
+<text x="832" y="414" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">9  Export and checklist</text>
+<text x="832" y="429" font-size="12" fill="#1f1f1f" text-anchor="start">The validated code goes into the customer&#x27;s own</text>
+<text x="832" y="445" font-size="12" fill="#1f1f1f" text-anchor="start">template with the estimate and attachments it</text>
+<text x="832" y="461" font-size="12" fill="#1f1f1f" text-anchor="start">needs. A checklist shows what is done and</text>
+<text x="832" y="477" font-size="12" fill="#1f1f1f" text-anchor="start">outstanding, including annexures to prepare.</text>
+<path d="M382,90.5 L418,90.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M782,90.5 L818,90.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M382,452.5 L418,452.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M782,452.5 L818,452.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M200.0,167 L200.0,219" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M600.0,167 L600.0,219" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M1000.0,167 L1000.0,219" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M200.0,340 L200.0,392" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M600.0,340 L600.0,392" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<path d="M1000.0,340 L1000.0,392" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="1010.0" y="184" width="190.2" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1016.0" y="197" font-size="12" fill="#333" text-anchor="start" font-style="italic">the answer and its evidence</text>
+<rect x="210.0" y="357" width="216.6" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="216.0" y="370" font-size="12" fill="#333" text-anchor="start" font-style="italic">everything above feeds the gate</text>
+<rect x="20" y="531" width="22" height="15" rx="4" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="50" y="543" font-size="12" fill="#333" text-anchor="start">deterministic code</text>
+<rect x="194.8" y="531" width="22" height="15" rx="4" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="224.8" y="543" font-size="12" fill="#333" text-anchor="start">human decision</text>
+<rect x="343.2" y="531" width="22" height="15" rx="4" fill="#f7f7f7" stroke="#9a9a9a" stroke-width="1.5"/>
+<text x="373.2" y="543" font-size="12" fill="#333" text-anchor="start">output</text>
+<rect x="438.79999999999995" y="530" width="46" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="461.79999999999995" y="543" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="494.79999999999995" y="543" font-size="12" fill="#333" text-anchor="start">= this part calls a language model</text>
+</svg>

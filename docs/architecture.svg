@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1065" width="1200" height="1065" font-family="'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1177" width="1200" height="1177" font-family="'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">RFP AI system architecture</title><desc id="d">A browser app talks to a FastAPI backend. The backend has ingest, retrieval, drafting and validation, conflict handling, review, export and chat modules. Only some call a language model, through a gateway that rotates keys across Groq, Gemini and OpenRouter. State lives in local SQLite files.</desc>
 <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
-<rect width="1200" height="1065" fill="#ffffff"/>
+<rect width="1200" height="1177" fill="#ffffff"/>
 <rect x="20" y="14" width="1160" height="127" rx="12" fill="#e8f0fe" fill-opacity="0.45" stroke="#4a78d4" stroke-width="1.5" stroke-dasharray="6 4"/>
 <text x="34" y="37" font-size="13" font-weight="700" fill="#173a85">BROWSER<tspan dx="12" font-size="12" font-weight="400" fill="#444">React 19 · TypeScript · Vite · Tailwind · TanStack Query</tspan></text>
-<rect x="36" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<rect x="36" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
 <text x="48" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">RFPs</text>
 <text x="48" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">import, rules</text>
-<rect x="176" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="188" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Studio</text>
-<text x="188" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">answers,</text>
-<text x="188" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">evidence</text>
-<rect x="316" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="328" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Chat</text>
-<text x="328" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">ask, rewrite</text>
-<rect x="456" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="468" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Knowledge</text>
-<text x="468" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">sources,</text>
-<text x="468" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">conflicts</text>
-<rect x="596" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="608" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Clarify</text>
-<text x="608" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">buyer questions</text>
-<rect x="736" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="748" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Audit</text>
-<text x="748" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">who did what</text>
-<rect x="876" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="888" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Settings</text>
-<text x="888" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">keys, quota</text>
-<rect x="1016" y="54" width="132" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="1028" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Export</text>
-<text x="1028" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">draft or final</text>
+<rect x="160" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="172" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Studio</text>
+<text x="172" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">answers,</text>
+<text x="172" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">evidence</text>
+<rect x="284" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="296" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Chat</text>
+<text x="296" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">ask, rewrite</text>
+<rect x="408" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="420" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Knowledge</text>
+<text x="420" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">sources,</text>
+<text x="420" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">conflicts</text>
+<rect x="532" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="544" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Clarify</text>
+<text x="544" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">buyer</text>
+<text x="544" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">questions</text>
+<rect x="656" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="668" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Analysis</text>
+<text x="668" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">gaps,</text>
+<text x="668" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">readiness</text>
+<rect x="780" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="792" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Audit</text>
+<text x="792" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">who did what</text>
+<rect x="904" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="916" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Settings</text>
+<text x="916" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">keys, quota</text>
+<rect x="1028" y="54" width="116" height="73" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="1040" y="76" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">Export</text>
+<text x="1040" y="91" font-size="12" fill="#1f1f1f" text-anchor="start">draft or</text>
+<text x="1040" y="107" font-size="12" fill="#1f1f1f" text-anchor="start">final</text>
 <path d="M600,141 L600,181" stroke="#555" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
 <rect x="614" y="154" width="309.0" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
 <text x="620" y="167" font-size="12" fill="#333" text-anchor="start" font-style="italic">REST + server-sent events (drafting progress)</text>
-<rect x="20" y="181" width="1160" height="389" rx="12" fill="#eaf5ea" fill-opacity="0.45" stroke="#4f9a4f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<rect x="20" y="181" width="1160" height="501" rx="12" fill="#eaf5ea" fill-opacity="0.45" stroke="#4f9a4f" stroke-width="1.5" stroke-dasharray="6 4"/>
 <text x="34" y="204" font-size="13" font-weight="700" fill="#16501c">FASTAPI BACKEND<tspan dx="12" font-size="12" font-weight="400" fill="#444">Python · SQLModel · all of it is deterministic code except the parts tagged model</tspan></text>
-<rect x="36" y="221" width="260" height="170.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<rect x="36" y="221" width="260" height="226.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
 <text x="48" y="243" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Ingest</text>
 <text x="48" y="258" font-size="12" fill="#1f1f1f" text-anchor="start">Parsers for xlsx, docx and pdf:</text>
 <text x="48" y="274" font-size="12" fill="#1f1f1f" text-anchor="start">IDs, order, sections and priority</text>
@@ -45,15 +51,15 @@
 <text x="48" y="322" font-size="12" fill="#1f1f1f" text-anchor="start">redacts customer names and splits</text>
 <text x="48" y="338" font-size="12" fill="#1f1f1f" text-anchor="start">sources into one passage per</text>
 <text x="48" y="354" font-size="12" fill="#1f1f1f" text-anchor="start">bullet.</text>
-<rect x="36" y="401.5" width="260" height="154.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="48" y="423.5" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Retrieve</text>
-<text x="48" y="438.5" font-size="12" fill="#1f1f1f" text-anchor="start">Keyword search plus local</text>
-<text x="48" y="454.5" font-size="12" fill="#1f1f1f" text-anchor="start">embeddings, fused by rank, with a</text>
-<text x="48" y="470.5" font-size="12" fill="#1f1f1f" text-anchor="start">glossary for Islamic-finance</text>
-<text x="48" y="486.5" font-size="12" fill="#1f1f1f" text-anchor="start">terms. Never offered: do-not-</text>
-<text x="48" y="502.5" font-size="12" fill="#1f1f1f" text-anchor="start">reuse, internal and superseded</text>
-<text x="48" y="518.5" font-size="12" fill="#1f1f1f" text-anchor="start">sources.</text>
-<rect x="312" y="221" width="330" height="137.0" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<rect x="36" y="457.5" width="260" height="210.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="48" y="479.5" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Retrieve</text>
+<text x="48" y="494.5" font-size="12" fill="#1f1f1f" text-anchor="start">Keyword search plus local</text>
+<text x="48" y="510.5" font-size="12" fill="#1f1f1f" text-anchor="start">embeddings, fused by rank, with a</text>
+<text x="48" y="526.5" font-size="12" fill="#1f1f1f" text-anchor="start">glossary for Islamic-finance</text>
+<text x="48" y="542.5" font-size="12" fill="#1f1f1f" text-anchor="start">terms. Never offered: do-not-</text>
+<text x="48" y="558.5" font-size="12" fill="#1f1f1f" text-anchor="start">reuse, internal and superseded</text>
+<text x="48" y="574.5" font-size="12" fill="#1f1f1f" text-anchor="start">sources.</text>
+<rect x="312" y="221" width="330" height="174.33333333333334" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
 <text x="324" y="243" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Draft and validate</text>
 <rect x="585" y="228" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
 <text x="609.5" y="241" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
@@ -63,34 +69,46 @@
 <text x="324" y="306" font-size="12" fill="#1f1f1f" text-anchor="start">requirement. Code checks every statement</text>
 <text x="324" y="322" font-size="12" fill="#1f1f1f" text-anchor="start">against its cited text, then computes</text>
 <text x="324" y="338" font-size="12" fill="#1f1f1f" text-anchor="start">confidence and flags.</text>
-<rect x="312" y="368.0" width="330" height="89.0" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="324" y="390.0" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Conflicts and clarifications</text>
-<rect x="585" y="375.0" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
-<text x="609.5" y="388.0" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
-<text x="324" y="405.0" font-size="12" fill="#1f1f1f" text-anchor="start">Judges contradicting passages once, when</text>
-<text x="324" y="421.0" font-size="12" fill="#1f1f1f" text-anchor="start">sources are indexed, and words the questions</text>
-<text x="324" y="437.0" font-size="12" fill="#1f1f1f" text-anchor="start">for the buyer.</text>
-<rect x="312" y="467.0" width="330" height="89.0" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="324" y="489.0" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Drafting runs</text>
-<text x="324" y="504.0" font-size="12" fill="#1f1f1f" text-anchor="start">Three requirements at a time, saved one by</text>
-<text x="324" y="520.0" font-size="12" fill="#1f1f1f" text-anchor="start">one. Waits out short rate limits, pauses on</text>
-<text x="324" y="536.0" font-size="12" fill="#1f1f1f" text-anchor="start">long outages, streams progress, resumes.</text>
-<rect x="658" y="221" width="250" height="170.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="670" y="243" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Review and audit</text>
-<text x="670" y="258" font-size="12" fill="#1f1f1f" text-anchor="start">Accept, edit, flag, regenerate,</text>
-<text x="670" y="274" font-size="12" fill="#1f1f1f" text-anchor="start">add an SE-provided fact. Editing</text>
-<text x="670" y="290" font-size="12" fill="#1f1f1f" text-anchor="start">or flagging an approved answer</text>
-<text x="670" y="306" font-size="12" fill="#1f1f1f" text-anchor="start">withdraws the approval. Every</text>
-<text x="670" y="322" font-size="12" fill="#1f1f1f" text-anchor="start">action is logged with who did</text>
-<text x="670" y="338" font-size="12" fill="#1f1f1f" text-anchor="start">it.</text>
-<rect x="658" y="401.5" width="250" height="154.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="670" y="423.5" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Knowledge-base admin</text>
-<text x="670" y="438.5" font-size="12" fill="#1f1f1f" text-anchor="start">Upload many files, deprecate,</text>
-<text x="670" y="454.5" font-size="12" fill="#1f1f1f" text-anchor="start">mark canonical, switch reuse.</text>
-<text x="670" y="470.5" font-size="12" fill="#1f1f1f" text-anchor="start">Settling a conflict supersedes</text>
-<text x="670" y="486.5" font-size="12" fill="#1f1f1f" text-anchor="start">one passage and redrafts the</text>
-<text x="670" y="502.5" font-size="12" fill="#1f1f1f" text-anchor="start">answers that relied on it.</text>
-<rect x="924" y="221" width="240" height="178.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<rect x="312" y="405.33333333333337" width="330" height="126.33333333333334" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="324" y="427.33333333333337" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Conflicts and clarifications</text>
+<rect x="585" y="412.33333333333337" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="609.5" y="425.33333333333337" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="324" y="442.33333333333337" font-size="12" fill="#1f1f1f" text-anchor="start">Judges contradicting passages once, when</text>
+<text x="324" y="458.33333333333337" font-size="12" fill="#1f1f1f" text-anchor="start">sources are indexed, and words the questions</text>
+<text x="324" y="474.33333333333337" font-size="12" fill="#1f1f1f" text-anchor="start">for the buyer.</text>
+<rect x="312" y="541.6666666666667" width="330" height="126.33333333333334" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="324" y="563.6666666666667" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Drafting runs</text>
+<text x="324" y="578.6666666666667" font-size="12" fill="#1f1f1f" text-anchor="start">Three requirements at a time, saved one by</text>
+<text x="324" y="594.6666666666667" font-size="12" fill="#1f1f1f" text-anchor="start">one. Waits out short rate limits, pauses on</text>
+<text x="324" y="610.6666666666667" font-size="12" fill="#1f1f1f" text-anchor="start">long outages, streams progress, resumes.</text>
+<rect x="658" y="221" width="250" height="169.0" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="670" y="243" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Capability and gaps</text>
+<rect x="851" y="228" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="875.5" y="241" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="670" y="258" font-size="12" fill="#1f1f1f" text-anchor="start">Classifies each answer as</text>
+<text x="670" y="274" font-size="12" fill="#1f1f1f" text-anchor="start">standard, configuration,</text>
+<text x="670" y="290" font-size="12" fill="#1f1f1f" text-anchor="start">development, third party or not</text>
+<text x="670" y="306" font-size="12" fill="#1f1f1f" text-anchor="start">available, checked against the</text>
+<text x="670" y="322" font-size="12" fill="#1f1f1f" text-anchor="start">cited text. Finds gaps and their</text>
+<text x="670" y="338" font-size="12" fill="#1f1f1f" text-anchor="start">owners. Reads requirements for</text>
+<text x="670" y="354" font-size="12" fill="#1f1f1f" text-anchor="start">dependencies, unclear wording</text>
+<text x="670" y="370" font-size="12" fill="#1f1f1f" text-anchor="start">and contradictions.</text>
+<rect x="658" y="400.0" width="250" height="137.0" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="670" y="422.0" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Review and audit</text>
+<text x="670" y="437.0" font-size="12" fill="#1f1f1f" text-anchor="start">Accept, edit, flag, regenerate,</text>
+<text x="670" y="453.0" font-size="12" fill="#1f1f1f" text-anchor="start">add an SE-provided fact. Editing</text>
+<text x="670" y="469.0" font-size="12" fill="#1f1f1f" text-anchor="start">or flagging an approved answer</text>
+<text x="670" y="485.0" font-size="12" fill="#1f1f1f" text-anchor="start">withdraws the approval. Every</text>
+<text x="670" y="501.0" font-size="12" fill="#1f1f1f" text-anchor="start">action is logged with who did</text>
+<text x="670" y="517.0" font-size="12" fill="#1f1f1f" text-anchor="start">it.</text>
+<rect x="658" y="547.0" width="250" height="121.0" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="670" y="569.0" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Knowledge-base admin</text>
+<text x="670" y="584.0" font-size="12" fill="#1f1f1f" text-anchor="start">Upload many files, deprecate,</text>
+<text x="670" y="600.0" font-size="12" fill="#1f1f1f" text-anchor="start">mark canonical, switch reuse.</text>
+<text x="670" y="616.0" font-size="12" fill="#1f1f1f" text-anchor="start">Settling a conflict supersedes</text>
+<text x="670" y="632.0" font-size="12" fill="#1f1f1f" text-anchor="start">one passage and redrafts the</text>
+<text x="670" y="648.0" font-size="12" fill="#1f1f1f" text-anchor="start">answers that relied on it.</text>
+<rect x="924" y="221" width="240" height="234.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
 <text x="936" y="243" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Export</text>
 <text x="936" y="258" font-size="12" fill="#1f1f1f" text-anchor="start">XLSX filled in place; DOCX in</text>
 <text x="936" y="274" font-size="12" fill="#1f1f1f" text-anchor="start">place or rebuilt from a PDF.</text>
@@ -98,81 +116,82 @@
 <text x="936" y="306" font-size="12" fill="#1f1f1f" text-anchor="start">wording, file name and word</text>
 <text x="936" y="322" font-size="12" fill="#1f1f1f" text-anchor="start">limit. Approved answers only by</text>
 <text x="936" y="338" font-size="12" fill="#1f1f1f" text-anchor="start">default.</text>
-<rect x="924" y="409.5" width="240" height="146.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="936" y="431.5" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Chat</text>
-<rect x="1107" y="416.5" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
-<text x="1131.5" y="429.5" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
-<text x="936" y="446.5" font-size="12" fill="#1f1f1f" text-anchor="start">Commands change one named</text>
-<text x="936" y="462.5" font-size="12" fill="#1f1f1f" text-anchor="start">answer. Questions are answered</text>
-<text x="936" y="478.5" font-size="12" fill="#1f1f1f" text-anchor="start">from the sources through the</text>
-<text x="936" y="494.5" font-size="12" fill="#1f1f1f" text-anchor="start">same validator.</text>
-<rect x="20" y="616" width="720" height="242" rx="12" fill="#fff1de" fill-opacity="0.45" stroke="#d98a1f" stroke-width="1.5" stroke-dasharray="6 4"/>
-<text x="34" y="639" font-size="13" font-weight="700" fill="#7a4100">LLM GATEWAY<tspan dx="12" font-size="12" font-weight="400" fill="#444">one door for every model call</tspan></text>
-<rect x="34.0" y="656" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="46.0" y="678" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Task chains</text>
-<text x="46.0" y="693" font-size="12" fill="#1f1f1f" text-anchor="start">draft and fast: an ordered list of models for</text>
-<text x="46.0" y="709" font-size="12" fill="#1f1f1f" text-anchor="start">each task, set in models.yaml.</text>
-<rect x="385.0" y="656" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="397.0" y="678" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Key pools</text>
-<text x="397.0" y="693" font-size="12" fill="#1f1f1f" text-anchor="start">Quota tracked per key and model: a short</text>
-<text x="397.0" y="709" font-size="12" fill="#1f1f1f" text-anchor="start">cooldown on a rate limit, exhausted until the</text>
-<text x="397.0" y="725" font-size="12" fill="#1f1f1f" text-anchor="start">daily reset.</text>
-<rect x="34.0" y="755" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="46.0" y="777" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Response cache</text>
-<text x="46.0" y="792" font-size="12" fill="#1f1f1f" text-anchor="start">An identical prompt is answered from the</text>
-<text x="46.0" y="808" font-size="12" fill="#1f1f1f" text-anchor="start">cache and costs no quota.</text>
-<rect x="385.0" y="755" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="397.0" y="777" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Failure is explicit</text>
-<text x="397.0" y="792" font-size="12" fill="#1f1f1f" text-anchor="start">A stalled model is skipped. If every key is</text>
-<text x="397.0" y="808" font-size="12" fill="#1f1f1f" text-anchor="start">spent the run pauses and says when to resume.</text>
-<text x="397.0" y="824" font-size="12" fill="#1f1f1f" text-anchor="start">It never invents text.</text>
-<rect x="20" y="892" width="720" height="127" rx="12" fill="#fff1de" fill-opacity="0.45" stroke="#d98a1f" stroke-width="1.5" stroke-dasharray="6 4"/>
-<text x="34" y="915" font-size="13" font-weight="700" fill="#7a4100">MODEL PROVIDERS<tspan dx="12" font-size="12" font-weight="400" fill="#444">free tiers, so limits are expected</tspan></text>
-<rect x="34.0" y="932" width="224.0" height="73" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="46.0" y="954" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Groq · 3 keys</text>
-<text x="46.0" y="969" font-size="12" fill="#1f1f1f" text-anchor="start">gpt-oss-120b, gpt-oss-20b,</text>
-<text x="46.0" y="985" font-size="12" fill="#1f1f1f" text-anchor="start">qwen3.8-27b. Tried first.</text>
-<rect x="268.0" y="932" width="224.0" height="73" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="280.0" y="954" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Gemini · 3 keys</text>
-<text x="280.0" y="969" font-size="12" fill="#1f1f1f" text-anchor="start">3.8-flash and flash-lite</text>
-<text x="280.0" y="985" font-size="12" fill="#1f1f1f" text-anchor="start">models. Overflow.</text>
-<rect x="502.0" y="932" width="224.0" height="73" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="514.0" y="954" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">OpenRouter · 3 keys</text>
-<text x="514.0" y="969" font-size="12" fill="#1f1f1f" text-anchor="start">Free models. Last resort.</text>
-<path d="M380.0,858 L380.0,892" stroke="#555" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
-<rect x="392.0" y="868" width="157.2" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
-<text x="398.0" y="881" font-size="12" fill="#333" text-anchor="start" font-style="italic">rotate keys, fail over</text>
-<rect x="760" y="616" width="420" height="403" rx="12" fill="#efefef" fill-opacity="0.45" stroke="#8a8a8a" stroke-width="1.5" stroke-dasharray="6 4"/>
-<text x="774" y="639" font-size="13" font-weight="700" fill="#2b2b2b">STORAGE<tspan dx="12" font-size="12" font-weight="400" fill="#444">all local, no cloud database</tspan></text>
-<rect x="774" y="656" width="392" height="87.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
-<text x="786" y="678" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">app.db · SQLite, WAL, FTS5</text>
-<text x="786" y="693" font-size="12" fill="#1f1f1f" text-anchor="start">RFPs, requirements, answers, citations, knowledge</text>
-<text x="786" y="709" font-size="12" fill="#1f1f1f" text-anchor="start">base, conflicts, audit log, chat, drafting runs.</text>
-<rect x="774" y="753.75" width="392" height="71.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
-<text x="786" y="775.75" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">llm.db</text>
-<text x="786" y="790.75" font-size="12" fill="#1f1f1f" text-anchor="start">Response cache, per-key quota state, usage.</text>
-<rect x="774" y="835.5" width="392" height="87.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
-<text x="786" y="857.5" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">Local embedding model</text>
-<text x="786" y="872.5" font-size="12" fill="#1f1f1f" text-anchor="start">BGE small, ONNX, runs on this machine and uses no API</text>
-<text x="786" y="888.5" font-size="12" fill="#1f1f1f" text-anchor="start">quota.</text>
-<rect x="774" y="933.25" width="392" height="71.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
-<text x="786" y="955.25" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">Files</text>
-<text x="786" y="970.25" font-size="12" fill="#1f1f1f" text-anchor="start">Uploaded RFPs and sources, exported responses.</text>
-<polyline points="380,570 380,616" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
-<rect x="392" y="585" width="216.6" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
-<text x="398" y="598" font-size="12" fill="#333" text-anchor="start" font-style="italic">model calls (tagged boxes only)</text>
-<polyline points="970.0,570 970.0,616" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
-<rect x="982.0" y="585" width="104.39999999999999" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
-<text x="988.0" y="598" font-size="12" fill="#333" text-anchor="start" font-style="italic">read and write</text>
-<rect x="20" y="1035" width="22" height="15" rx="4" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
-<text x="50" y="1047" font-size="12" fill="#333" text-anchor="start">browser</text>
-<rect x="122.19999999999999" y="1035" width="22" height="15" rx="4" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
-<text x="152.2" y="1047" font-size="12" fill="#333" text-anchor="start">deterministic code</text>
-<rect x="297.0" y="1035" width="22" height="15" rx="4" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
-<text x="327.0" y="1047" font-size="12" fill="#333" text-anchor="start">model gateway and providers</text>
-<rect x="531.2" y="1035" width="22" height="15" rx="4" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
-<text x="561.2" y="1047" font-size="12" fill="#333" text-anchor="start">storage</text>
-<rect x="633.4000000000001" y="1034" width="46" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
-<text x="656.4000000000001" y="1047" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
-<text x="689.4000000000001" y="1047" font-size="12" fill="#333" text-anchor="start">= this part calls a language model</text>
+<rect x="924" y="465.5" width="240" height="202.5" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="936" y="487.5" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">Chat</text>
+<rect x="1107" y="472.5" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="1131.5" y="485.5" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="936" y="502.5" font-size="12" fill="#1f1f1f" text-anchor="start">Commands change one named</text>
+<text x="936" y="518.5" font-size="12" fill="#1f1f1f" text-anchor="start">answer. Questions are answered</text>
+<text x="936" y="534.5" font-size="12" fill="#1f1f1f" text-anchor="start">from the sources through the</text>
+<text x="936" y="550.5" font-size="12" fill="#1f1f1f" text-anchor="start">same validator.</text>
+<rect x="20" y="728" width="720" height="242" rx="12" fill="#fff1de" fill-opacity="0.45" stroke="#d98a1f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="34" y="751" font-size="13" font-weight="700" fill="#7a4100">LLM GATEWAY<tspan dx="12" font-size="12" font-weight="400" fill="#444">one door for every model call</tspan></text>
+<rect x="34.0" y="768" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="46.0" y="790" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Task chains</text>
+<text x="46.0" y="805" font-size="12" fill="#1f1f1f" text-anchor="start">draft, assess, structure and fast: an ordered</text>
+<text x="46.0" y="821" font-size="12" fill="#1f1f1f" text-anchor="start">list of models for each task, set in</text>
+<text x="46.0" y="837" font-size="12" fill="#1f1f1f" text-anchor="start">models.yaml.</text>
+<rect x="385.0" y="768" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="397.0" y="790" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Key pools</text>
+<text x="397.0" y="805" font-size="12" fill="#1f1f1f" text-anchor="start">Quota tracked per key and model: a short</text>
+<text x="397.0" y="821" font-size="12" fill="#1f1f1f" text-anchor="start">cooldown on a rate limit, exhausted until the</text>
+<text x="397.0" y="837" font-size="12" fill="#1f1f1f" text-anchor="start">daily reset.</text>
+<rect x="34.0" y="867" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="46.0" y="889" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Response cache</text>
+<text x="46.0" y="904" font-size="12" fill="#1f1f1f" text-anchor="start">An identical prompt is answered from the</text>
+<text x="46.0" y="920" font-size="12" fill="#1f1f1f" text-anchor="start">cache and costs no quota.</text>
+<rect x="385.0" y="867" width="341.0" height="89" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="397.0" y="889" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Failure is explicit</text>
+<text x="397.0" y="904" font-size="12" fill="#1f1f1f" text-anchor="start">A stalled model is skipped. If every key is</text>
+<text x="397.0" y="920" font-size="12" fill="#1f1f1f" text-anchor="start">spent the run pauses and says when to resume.</text>
+<text x="397.0" y="936" font-size="12" fill="#1f1f1f" text-anchor="start">It never invents text.</text>
+<rect x="20" y="1004" width="720" height="127" rx="12" fill="#fff1de" fill-opacity="0.45" stroke="#d98a1f" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="34" y="1027" font-size="13" font-weight="700" fill="#7a4100">MODEL PROVIDERS<tspan dx="12" font-size="12" font-weight="400" fill="#444">free tiers, so limits are expected</tspan></text>
+<rect x="34.0" y="1044" width="224.0" height="73" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="46.0" y="1066" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Groq · 3 keys</text>
+<text x="46.0" y="1081" font-size="12" fill="#1f1f1f" text-anchor="start">gpt-oss-120b, gpt-oss-20b,</text>
+<text x="46.0" y="1097" font-size="12" fill="#1f1f1f" text-anchor="start">qwen3.8-27b. Tried first.</text>
+<rect x="268.0" y="1044" width="224.0" height="73" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="280.0" y="1066" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">Gemini · 3 keys</text>
+<text x="280.0" y="1081" font-size="12" fill="#1f1f1f" text-anchor="start">3.8-flash and flash-lite</text>
+<text x="280.0" y="1097" font-size="12" fill="#1f1f1f" text-anchor="start">models. Overflow.</text>
+<rect x="502.0" y="1044" width="224.0" height="73" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="514.0" y="1066" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">OpenRouter · 3 keys</text>
+<text x="514.0" y="1081" font-size="12" fill="#1f1f1f" text-anchor="start">Free models. Last resort.</text>
+<path d="M380.0,970 L380.0,1004" stroke="#555" stroke-width="1.8" fill="none" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<rect x="392.0" y="980" width="157.2" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="398.0" y="993" font-size="12" fill="#333" text-anchor="start" font-style="italic">rotate keys, fail over</text>
+<rect x="760" y="728" width="420" height="403" rx="12" fill="#efefef" fill-opacity="0.45" stroke="#8a8a8a" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="774" y="751" font-size="13" font-weight="700" fill="#2b2b2b">STORAGE<tspan dx="12" font-size="12" font-weight="400" fill="#444">all local, no cloud database</tspan></text>
+<rect x="774" y="768" width="392" height="87.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
+<text x="786" y="790" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">app.db · SQLite, WAL, FTS5</text>
+<text x="786" y="805" font-size="12" fill="#1f1f1f" text-anchor="start">RFPs, requirements, answers, citations, knowledge</text>
+<text x="786" y="821" font-size="12" fill="#1f1f1f" text-anchor="start">base, conflicts, audit log, chat, drafting runs.</text>
+<rect x="774" y="865.75" width="392" height="71.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
+<text x="786" y="887.75" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">llm.db</text>
+<text x="786" y="902.75" font-size="12" fill="#1f1f1f" text-anchor="start">Response cache, per-key quota state, usage.</text>
+<rect x="774" y="947.5" width="392" height="87.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
+<text x="786" y="969.5" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">Local embedding model</text>
+<text x="786" y="984.5" font-size="12" fill="#1f1f1f" text-anchor="start">BGE small, ONNX, runs on this machine and uses no API</text>
+<text x="786" y="1000.5" font-size="12" fill="#1f1f1f" text-anchor="start">quota.</text>
+<rect x="774" y="1045.25" width="392" height="71.75" rx="8" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
+<text x="786" y="1067.25" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">Files</text>
+<text x="786" y="1082.25" font-size="12" fill="#1f1f1f" text-anchor="start">Uploaded RFPs and sources, exported responses.</text>
+<polyline points="380,682 380,728" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="392" y="697" width="216.6" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="398" y="710" font-size="12" fill="#333" text-anchor="start" font-style="italic">model calls (tagged boxes only)</text>
+<polyline points="970.0,682 970.0,728" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="982.0" y="697" width="104.39999999999999" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="988.0" y="710" font-size="12" fill="#333" text-anchor="start" font-style="italic">read and write</text>
+<rect x="20" y="1147" width="22" height="15" rx="4" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="50" y="1159" font-size="12" fill="#333" text-anchor="start">browser</text>
+<rect x="122.19999999999999" y="1147" width="22" height="15" rx="4" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="152.2" y="1159" font-size="12" fill="#333" text-anchor="start">deterministic code</text>
+<rect x="297.0" y="1147" width="22" height="15" rx="4" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="327.0" y="1159" font-size="12" fill="#333" text-anchor="start">model gateway and providers</text>
+<rect x="531.2" y="1147" width="22" height="15" rx="4" fill="#efefef" stroke="#8a8a8a" stroke-width="1.5"/>
+<text x="561.2" y="1159" font-size="12" fill="#333" text-anchor="start">storage</text>
+<rect x="633.4000000000001" y="1146" width="46" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="656.4000000000001" y="1159" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="689.4000000000001" y="1159" font-size="12" fill="#333" text-anchor="start">= this part calls a language model</text>
 </svg>

@@ -24,9 +24,10 @@ the app yourself in the browser with the real models.
 | KB admin (upload, deprecate, reuse switches), conflict resolution with recalculation of affected answers, clarification editing | built, tested |
 | Frontend: Response Studio, KB and conflicts, clarifications, audit, settings and quota, export dialog | built, browser-checked |
 | Chat workspace: grounded questions and explicit commands, history restored on reopen | built, tested |
+| Level 2: response schemes read from the RFP, capability classification (standard / configuration / development / third party / not available) checked against the cited text, gap analysis (confirmed gap vs knowledge gap, with owners), requirement reading (dependencies, components, unclear and contradicting wording), ranked clarifications, review gate and submission checklist, workflow board, redraft-without-touching-approved | built, tested live (see "Level 2") |
 | Not built | connector cards (Confluence, Notion, Drive, Jira), approved-answer library feedback loop, login and roles, OCR, Arabic |
 
-Offline test suite: 357 tests, no network or keys needed. Browser check: 31 steps in real Chrome (`e2e/browser_check.py`).
+Offline test suite: 479 tests, no network or keys needed. Browser check: 31 steps in real Chrome (`e2e/browser_check.py`).
 
 ## How the agent keeps answers honest
 
@@ -95,6 +96,8 @@ API (all under `/api`):
 | Drafting | `POST /rfps/{id}/draft` (also resumes), `GET /rfps/{id}/job|answers|clarifications|summary`, `GET /rfps/{id}/events` (SSE) |
 | Clarifications | `POST /rfps/{id}/clarifications`, `PATCH|DELETE /rfps/{id}/clarifications/{cid}` |
 | Chat | `GET|POST|DELETE /rfps/{id}/chat` |
+| Level 2 analysis | `POST /rfps/{id}/assess`, `POST /rfps/{id}/interpret`, `GET /rfps/{id}/assessments` (the compliance matrix), `PATCH /rfps/{id}/assessments/{req}` (validate or correct), `GET /rfps/{id}/gaps` |
+| Level 2 review | `GET /rfps/{id}/readiness`, `POST /rfps/{id}/proceed-to-review`, `GET /rfps/{id}/checklist`, `PUT /rfps/{id}/checklist/{key}`, `GET /rfps/{id}/workflow`, `POST /rfps/{id}/assign-suggested`, `POST /rfps/{id}/regenerate-affected` |
 | Review | `POST /rfps/{id}/answers/{req}/accept|edit|revert|status|flag|regenerate|facts`, `GET /rfps/{id}/audit` |
 | Format and export | `GET|PUT /rfps/{id}/format-rules`, `GET /rfps/{id}/export/check`, `POST /rfps/{id}/export`, `GET /rfps/{id}/export/matrix` |
 | System | `GET /health`, `GET /llm/status`, `POST /llm/reset-keys`, `GET /audit` |
@@ -102,6 +105,19 @@ API (all under `/api`):
 Human control: export defaults to approved answers only. A review copy that includes drafts is named `_DRAFT`,
 prefixes every unapproved answer, and carries a banner. An accepted answer that is edited, re-statused or handed
 off loses its approval. "Cannot Confirm" never receives a compliance code.
+
+## Level 2
+
+Beyond drafting: the app reads the response codes an RFP asks for, classifies how each requirement is met (and refuses to
+suggest a code where the evidence does not settle it), separates confirmed product gaps from gaps in our own documentation,
+reads the requirements for dependencies and unclear or contradicting wording, ranks the clarification questions, gates review
+on what a reviewer should not have to find, and writes the validated code into the customer's own template.
+
+Measured on a held-out Level 2 RFP with the real models: capability as expected on 17 of 17 assessed requirements and all 10
+planted gaps found (the first run scored 14 of 16 and 7 of 10, and exposed four weaknesses in the checks, now fixed). I wrote
+both the documents and the expectations, and tuned rules after the first run, so this is not an independent test. Steps and
+expected outcomes: [`live_test/GUIDE_LEVEL2.md`](live_test/GUIDE_LEVEL2.md). Design: [`docs/architecture.md`](docs/architecture.md).
+Browser check: `e2e/level2_check.py` (12 steps, run on a drafted Level 2 RFP).
 
 ## Setup
 
@@ -145,7 +161,7 @@ Set `AS_OF_DATE=2026-10-31` in `.env` to pin "today" so staleness results are re
 
 ## How the LLM layer handles daily limits
 
-- Each task (`draft` and `fast`; a `structure` chain is configured but not used yet) has an ordered chain in `models.yaml`.
+- Each task (`draft`, `assess`, `structure` and `fast`) has an ordered chain in `models.yaml`.
 - Quota is tracked per (key, model). A 429 puts that pair on cooldown, or marks it exhausted until the
   provider's daily reset when the error says "per day". The next key is tried, then the next model.
 - State is stored in `data/llm.db`, so a restart does not forget that a key is spent.
