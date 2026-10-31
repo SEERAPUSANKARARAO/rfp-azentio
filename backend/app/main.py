@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
 from .db import get_engine
-from .routers import agent, chat, export, kb, review, rfps, system
+from .routers import agent, assessment, chat, export, kb, review, rfps, system
 
 
 @asynccontextmanager
@@ -32,6 +32,7 @@ def create_app() -> FastAPI:
     app.include_router(review.router, prefix="/api")
     app.include_router(export.router, prefix="/api")
     app.include_router(chat.router, prefix="/api")
+    app.include_router(assessment.router, prefix="/api")
     return app
 
 

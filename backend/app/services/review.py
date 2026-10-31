@@ -17,7 +17,7 @@ from . import audit
 
 # who an answer can be handed to for a decision the SE cannot make alone
 ASSIGNEES = ("SME", "Security Officer", "Commercial Desk", "Legal (Contracts)", "Account Management",
-             "Shariah Board Liaison", "Product Owner")
+             "Shariah Board Liaison", "Product Owner", "Product Management", "Engineering", "Solution Architecture")
 
 
 class ReviewError(Exception):
@@ -55,6 +55,8 @@ def accept(session: Session, rfp_id: int, requirement_id: int, reviewer: str) ->
     ans.reviewer = reviewer or "se"
     ans.reviewed_at = _now()
     ans.updated_at = _now()
+    if (ans.flag_details or {}).get("recheck"):  # approving again is the re-check
+        ans.flag_details = {k: v for k, v in ans.flag_details.items() if k != "recheck"}
     audit.record(session, "answer", "accepted", rfp_id=rfp_id, entity_id=ans.id, actor=ans.reviewer,
                  payload={"req_id": req.req_id, "status": ans.compliance_status, "edited": ans.edited,
                           "flags": ans.flags})

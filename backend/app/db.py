@@ -49,8 +49,45 @@ def check_schema(engine: Engine) -> None:
             )
 
 
+def _scalar_default(column):
+    arg = getattr(column.default, "arg", None)
+    return arg if isinstance(arg, (str, int, float, bool)) else None
+
+
+def add_missing_columns(engine: Engine) -> None:
+    """Add columns a newer version of the app introduced, so an existing database keeps its data.
+
+    Only what SQLite can add safely: a column that may be empty, or one with a simple constant default. Anything
+    else (a required column with no default) is left for check_schema to refuse with a clear message.
+    """
+    inspector = inspect(engine)
+    with engine.begin() as conn:
+        for table in SQLModel.metadata.sorted_tables:
+            if not inspector.has_table(table.name):
+                continue
+            have = {c["name"] for c in inspector.get_columns(table.name)}
+            for col in table.columns:
+                if col.name in have or col.primary_key:
+                    continue
+                default = _scalar_default(col)
+                if not col.nullable and default is None:
+                    continue
+                ddl = f'ALTER TABLE "{table.name}" ADD COLUMN "{col.name}" {col.type.compile(dialect=engine.dialect)}'
+                if not col.nullable:
+                    ddl += " NOT NULL"
+                if default is not None:
+                    if isinstance(default, bool):
+                        ddl += f" DEFAULT {int(default)}"
+                    elif isinstance(default, str):
+                        ddl += " DEFAULT '" + default.replace("'", "''") + "'"
+                    else:
+                        ddl += f" DEFAULT {default!r}"
+                conn.exec_driver_sql(ddl)
+
+
 def init_db(engine: Engine) -> None:
     SQLModel.metadata.create_all(engine)
+    add_missing_columns(engine)
     check_schema(engine)
     with engine.begin() as conn:
         # rowid of each FTS row is the KbChunk.id it indexes

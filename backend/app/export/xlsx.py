@@ -45,16 +45,37 @@ def _table(ws, headers: list[str], rows: list[list], widths: list[int]) -> None:
     ws.freeze_panes = "A2"
 
 
+def _comment(row) -> str:
+    """The Comments cell: sources, then what a response code needs (estimate, attachments), then any code awaiting a person."""
+    parts = []
+    if row.citations:
+        parts.append("Sources: " + sources_text(row.citations))
+    a = row.assessment
+    if a is not None:
+        if a.estimate:
+            parts.append(f"Effort estimate: {a.estimate}")
+        if a.attachments:
+            parts.append("Attachments: " + ", ".join(a.attachments))
+        if row.suggested_code and not row.code:
+            parts.append(f"Suggested response code {row.suggested_code} is waiting for validation.")
+    return "\n".join(parts)
+
+
 def _matrix_rows(plan: ExportPlan) -> list[list]:
     out = []
     for r in plan.rows:
-        a = r.answer
+        a, asm = r.answer, r.assessment
         out.append([
             r.requirement.req_id, r.section_title, r.requirement.text,
             {True: "Mandatory", False: "Optional", None: ""}[r.requirement.mandatory],
-            (a.compliance_status if a else "Not drafted"), r.code or "",
+            (a.compliance_status if a else "Not drafted"), (asm.capability if asm else ""),
+            r.code or (r.suggested_code and f"{r.suggested_code} (suggested)") or "",
+            ("Validated" if asm and (asm.confirmed or not asm.needs_validation) else
+             "Needs validation" if asm and asm.code else ""),
+            ", ".join(asm.needs) if asm and asm.needs else "",
             f"{a.confidence:.0%}" if a and a.confidence is not None else "",
             ", ".join(a.flags) if a and a.flags else "",
+            ", ".join(g["type"] for g in (asm.gaps if asm else [])), (asm.gap_owner if asm else ""),
             (a.assigned_to or "") if a else "",
             ("Approved" if r.approved else ("Draft" if r.included else "Not included")),
             (a.reviewer or "") if a and r.approved else "",
@@ -63,9 +84,19 @@ def _matrix_rows(plan: ExportPlan) -> list[list]:
     return out
 
 
-MATRIX_HEAD = ["Ref", "Section", "Requirement", "Priority", "Status", "RFP code", "Confidence", "Flags",
-               "Assigned to", "Export state", "Approved by", "Sources cited"]
-MATRIX_W = [8, 24, 60, 11, 18, 10, 11, 26, 18, 14, 14, 10]
+MATRIX_HEAD = ["Ref", "Section", "Requirement", "Priority", "Status", "Capability", "RFP code", "Code state", "Code needs",
+               "Confidence", "Flags", "Gaps", "Suggested owner", "Assigned to", "Export state", "Approved by",
+               "Sources cited"]
+MATRIX_W = [8, 24, 60, 11, 18, 15, 16, 16, 18, 11, 26, 26, 20, 18, 14, 14, 10]
+
+
+def _gap_rows(plan: ExportPlan) -> list[list]:
+    out = []
+    for r in plan.rows:
+        for g in (r.assessment.gaps if r.assessment else []):
+            out.append([r.requirement.req_id, r.requirement.text, g["type"].replace("_", " "), g["detail"], g["owner"],
+                        "Yes" if g.get("critical") else "No"])
+    return out
 
 
 def add_support_sheets(wb, plan: ExportPlan) -> None:
@@ -73,8 +104,23 @@ def add_support_sheets(wb, plan: ExportPlan) -> None:
     _table(ws, MATRIX_HEAD, _matrix_rows(plan), MATRIX_W)
 
     ws = wb.create_sheet(_unique(wb, "Clarifications"))
-    _table(ws, ["Requirements", "Question for the customer", "Why we are asking", "Status"],
-           [[", ".join(c.requirement_ids), c.text, c.reason, c.status] for c in plan.clarifications], [18, 70, 60, 10])
+    _table(ws, ["Priority", "Requirements", "Question for the customer", "Why we are asking", "Impact", "Status",
+                "Customer's reply"],
+           [[c.priority, ", ".join(c.requirement_ids), c.text, c.reason, c.impact, c.status, c.answer or ""]
+            for c in sorted(plan.clarifications, key=lambda c: ({"high": 0, "medium": 1, "low": 2}.get(c.priority, 1), c.id))],
+           [10, 16, 70, 55, 12, 10, 40])
+
+    gaps = _gap_rows(plan)
+    if gaps:
+        ws = wb.create_sheet(_unique(wb, "Gap Analysis"))
+        _table(ws, ["Ref", "Requirement", "Gap", "What is missing", "Suggested owner", "Mandatory"], gaps,
+               [8, 60, 22, 70, 22, 11])
+
+    if plan.checklist.get("items"):
+        ws = wb.create_sheet(_unique(wb, "Submission Checklist"))
+        _table(ws, ["Item", "Status", "Detail"],
+               [[i["label"], {"done": "Done", "outstanding": "Outstanding", "na": "Not applicable"}[i["status"]], i["detail"]]
+                for i in plan.checklist["items"]], [70, 14, 50])
 
     ws = wb.create_sheet(_unique(wb, "Source Index"))
     _table(ws, ["Source", "Date", "Product version", "Kind", "Locations cited", "Used for"],
@@ -91,7 +137,9 @@ def add_support_sheets(wb, plan: ExportPlan) -> None:
         ("Answered in this file", sum(r.included for r in plan.rows)),
         ("Approved", sum(r.approved for r in plan.rows)),
         ("Word limit per answer", rules.get("word_limit") or "none stated"),
-        ("Compliance codes", rules.get("compliance_legend") or ", ".join(rules.get("compliance_codes", [])) or "none stated"),
+        ("Response codes", "; ".join(f"{c['code']} = {c['label']}" if c.get("label") and c["label"] != c["code"] else c["code"]
+                                     for c in (rules.get("response_scheme") or {}).get("codes", []))
+         or rules.get("compliance_legend") or ", ".join(rules.get("compliance_codes", [])) or "none stated"),
         ("Citations", "[n] in an answer refers to the n-th entry of that row's Sources cell; see Source Index."),
         ("Drafted by", "RFP AI. Every answer is drafted from approved sources and reviewed by a Sales Engineer."),
     ]
@@ -141,8 +189,7 @@ def export_xlsx(plan: ExportPlan, out_path: Path) -> None:
             ws.cell(row=r, column=resp, value=row.text).alignment = WRAP
             if row.code:
                 ws.cell(row=r, column=comp, value=row.code).alignment = WRAP
-            ws.cell(row=r, column=cmts, value="Sources: " + sources_text(row.citations) if row.citations else None
-                    ).alignment = WRAP
+            ws.cell(row=r, column=cmts, value=_comment(row) or None).alignment = WRAP
 
     add_support_sheets(wb, plan)
     wb.save(out_path)

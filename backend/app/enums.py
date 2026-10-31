@@ -56,3 +56,31 @@ JOB_RUNNING = "running"
 JOB_PAUSED = "paused"  # LLM quota exhausted; resumes automatically or on demand
 JOB_DONE = "done"
 JOB_FAILED = "failed"
+
+
+# ---- Level 2: capability classification, gaps, clarifications, readiness
+CAP_STANDARD = "standard"  # supported out of the box
+CAP_CONFIG = "configuration"  # achieved by configuring the product
+CAP_DEV = "development"  # needs custom development
+CAP_THIRD = "third_party"  # relies on a partner or another vendor's product
+CAP_NOT = "not_available"  # the documentation says the product does not support it
+CAP_UNKNOWN = "unknown"  # the evidence does not settle it: never given a response code
+CAPABILITIES = (CAP_STANDARD, CAP_CONFIG, CAP_DEV, CAP_THIRD, CAP_NOT, CAP_UNKNOWN)
+# When one requirement has several parts, the least favourable evidenced part decides the overall class.
+CAP_SEVERITY = {CAP_STANDARD: 1, CAP_CONFIG: 2, CAP_THIRD: 3, CAP_DEV: 4, CAP_NOT: 5}
+
+SCHEME_CAPABILITY = "capability"  # the RFP asks for Standard / Configuration / Development / ...
+SCHEME_COMPLIANCE = "compliance"  # the RFP asks for Complies / Partially complies / Does not comply
+NEED_EXPLANATION, NEED_ESTIMATE, NEED_ATTACHMENT = "explanation", "estimate", "attachment"
+
+# A confirmed product gap is not the same as a gap in our documentation.
+GAP_CONFIRMED = "confirmed_gap"  # the sources say the product does not do this
+GAP_DEV = "development_required"
+GAP_KNOWLEDGE = "knowledge_gap"  # the sources do not say: someone has to find out
+GAP_INTEGRATION = "integration_dependency"
+GAP_SECURITY = "security_concern"
+GAP_DOCS = "documentation_gap"  # stale, conflicting or missing documentation
+GAP_TYPES = (GAP_CONFIRMED, GAP_DEV, GAP_KNOWLEDGE, GAP_INTEGRATION, GAP_SECURITY, GAP_DOCS)
+
+PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW = "high", "medium", "low"
+IMPACT_DESIGN, IMPACT_DELIVERY, IMPACT_COMMERCIAL, IMPACT_COMPLIANCE = "design", "delivery", "commercial", "compliance"

@@ -14,8 +14,10 @@ from sqlmodel import Session, select
 
 from .. import enums
 from ..agent.formatrules import code_for, over_limit, word_count
+from ..agent.scheme import scheme_of
 from ..config import get_settings
-from ..models import Answer, ClarificationQuery, Citation, KbDocument, Requirement, Rfp, Section
+from ..models import Answer, Assessment, ClarificationQuery, Citation, KbDocument, Requirement, Rfp, Section
+from ..services.readiness import checklist as submission_checklist
 
 DRAFT_MARK = "[DRAFT - not approved] "
 
@@ -29,7 +31,9 @@ class ExportRow:
     text: str = ""  # what goes in the response cell (already marked if it is an unapproved draft)
     included: bool = False
     approved: bool = False
-    code: str = ""
+    code: str = ""  # the code written into the customer's file: only ever one a person can stand behind
+    suggested_code: str = ""  # what the agent suggested, even if it is not validated yet
+    assessment: Assessment | None = None
     citations: list[Citation] = field(default_factory=list)
 
 
@@ -42,6 +46,7 @@ class ExportPlan:
     draft_copy: bool  # true if any unapproved answer is included
     vendor: str
     sources: list[dict]
+    checklist: dict = field(default_factory=dict)
 
 
 def sources_text(citations: list[Citation]) -> str:
@@ -53,12 +58,25 @@ def sources_text(citations: list[Citation]) -> str:
     return "; ".join(out)
 
 
+def row_code(rules: dict, answer: Answer, assessment: Assessment | None) -> tuple[str, str]:
+    """(code to write, code suggested). With a capability scheme, a code is only written once the evidence is complete
+    or a person has validated it: an unvalidated suggestion never goes into the customer's file as if it were settled."""
+    scheme = scheme_of(rules)
+    if scheme is not None and scheme.kind == enums.SCHEME_CAPABILITY:
+        if assessment is None or not assessment.code:
+            return "", ""
+        ok = assessment.confirmed or not assessment.needs_validation
+        return (assessment.code if ok else ""), assessment.code
+    return code_for(rules, answer.compliance_status), ""
+
+
 def build_plan(session: Session, rfp_id: int, *, approved_only: bool = True) -> ExportPlan:
     rfp = session.get(Rfp, rfp_id)
     rules = rfp.format_rules or {}
     sections = {s.id: s for s in session.exec(select(Section).where(Section.rfp_id == rfp_id)).all()}
     reqs = session.exec(select(Requirement).where(Requirement.rfp_id == rfp_id).order_by(Requirement.order)).all()
     answers = {a.requirement_id: a for a in session.exec(select(Answer)).all()}
+    assessments = {a.requirement_id: a for a in session.exec(select(Assessment)).all()}
     cites: dict[int, list[Citation]] = {}
     for c in session.exec(select(Citation)).all():
         cites.setdefault(c.answer_id, []).append(c)
@@ -74,7 +92,8 @@ def build_plan(session: Session, rfp_id: int, *, approved_only: bool = True) -> 
             if body and (approved or not approved_only):
                 row.included, row.approved = True, approved
                 row.text = body if approved else DRAFT_MARK + body
-                row.code = code_for(rules, a.compliance_status)
+                row.assessment = assessments.get(r.id)
+                row.code, row.suggested_code = row_code(rules, a, row.assessment)
                 row.citations = sorted(cites.get(a.id, []), key=lambda c: c.marker)
                 draft_copy = draft_copy or not approved
         rows.append(row)
@@ -99,7 +118,8 @@ def build_plan(session: Session, rfp_id: int, *, approved_only: bool = True) -> 
 
     clar = session.exec(select(ClarificationQuery).where(
         ClarificationQuery.rfp_id == rfp_id, ClarificationQuery.status != "dismissed")).all()
-    return ExportPlan(rfp, rules, rows, clar, draft_copy, get_settings().vendor_name, sources)
+    return ExportPlan(rfp, rules, rows, clar, draft_copy, get_settings().vendor_name, sources,
+                      submission_checklist(session, rfp_id))
 
 
 def check_plan(plan: ExportPlan) -> dict:
@@ -140,6 +160,15 @@ def check_plan(plan: ExportPlan) -> dict:
         add("warning", "approved_with_flags",
             f"{len(risky)} approved answer(s) still carry evidence flags (stale, conflicting, unsupported or "
             "injection). Confirm they were reviewed.", risky)
+
+    scheme = scheme_of(rules)
+    if scheme is not None and scheme.kind == enums.SCHEME_CAPABILITY:
+        uncoded = [r.requirement.req_id for r in plan.rows if r.included and r.answer and r.answer.triage != enums.TRIAGE_OWNER
+                   and not r.code]
+        if uncoded:
+            add("warning", "response_code_missing",
+                f"{len(uncoded)} included answer(s) have no response code in the file, because none was suggested or it "
+                f"is not validated yet: {', '.join(uncoded[:8])}{'...' if len(uncoded) > 8 else ''}.", uncoded)
 
     if not rules.get("confirmed"):
         add("warning", "rules_unconfirmed", "The detected formatting rules have not been confirmed by the SE.")

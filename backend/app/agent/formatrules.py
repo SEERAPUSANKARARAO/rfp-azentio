@@ -13,6 +13,7 @@ from datetime import date
 from pydantic import BaseModel, Field
 
 from .. import enums
+from .scheme import detect_scheme
 
 _MONTHS = {m: i for i, m in enumerate(
     "january february march april may june july august september october november december".split(), 1)}
@@ -31,6 +32,7 @@ class FormatRules(BaseModel):
     cite_sources: bool = False
     deadline: str | None = None  # ISO date
     clarification_deadline: str | None = None
+    response_scheme: dict | None = None  # see scheme.py: the codes the RFP asks for, and what each means
     detected_by: str = "rules"
     confirmed: bool = False  # becomes true when the SE reviews and saves the rules
 
@@ -120,6 +122,7 @@ def extract_rules(instruction_text: str) -> dict:
         r.word_limit = int(m.group(1))
 
     r.compliance_codes, r.compliance_map, r.compliance_legend = _codes(sentences)
+    r.response_scheme = detect_scheme(instruction_text, r.compliance_map, r.compliance_legend) or None
 
     m = re.search(r"(<[A-Za-z ]+>[\w.\-/<>]*\.(?:xlsx|docx|pdf))", flat)
     if m:

@@ -26,7 +26,7 @@ def no_keys() -> Settings:
 
 def test_models_yaml_is_wellformed():
     cfg = yaml.safe_load((ROOT / "models.yaml").read_text())
-    assert set(cfg["tasks"]) == {"structure", "draft", "fast"}
+    assert set(cfg["tasks"]) == {"structure", "draft", "assess", "fast"}
     for task, entries in cfg["tasks"].items():
         assert entries, task
         pairs = [(e["provider"], e["model"]) for e in entries]

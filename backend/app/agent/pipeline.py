@@ -14,7 +14,7 @@ from sqlmodel import Session, select
 from .. import enums
 from ..config import get_settings
 from ..llm.gateway import LLMGateway
-from ..models import Answer, Citation, Requirement, Rfp, Section
+from ..models import Answer, Citation, ClarificationQuery, Requirement, Rfp, Section
 from ..rag.retrieve import retrieve
 from ..services import audit
 from .prompts import SYSTEM, build_prompt
@@ -85,6 +85,13 @@ async def draft_requirement(
         owner = triage_owner(clean_text)
         if owner:
             return _save_owner(session, req, owner)
+        # What the customer replied to a question about this requirement is part of the requirement from now on.
+        # It is the customer's words, so it is cleaned like any other text from outside before the model sees it.
+        replies = [c.answer for c in session.exec(select(ClarificationQuery).where(
+            ClarificationQuery.rfp_id == req.rfp_id, ClarificationQuery.status == "answered")).all()
+            if req.req_id in (c.requirement_ids or []) and (c.answer or "").strip()]
+        if replies:
+            clean_text = clean_text + "\n\nCustomer clarification: " + " ".join(sanitize_requirement(r)[0] for r in replies)
         passages = retrieve(session, clean_text, k=k or s.retrieval_k)
         req_id, mandatory, req_pk, rfp_id, rfp_name = req.req_id, req.mandatory, req.id, req.rfp_id, rfp.name
 

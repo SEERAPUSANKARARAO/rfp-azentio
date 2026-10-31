@@ -266,10 +266,13 @@ async def test_compliance_matrix_has_a_row_per_requirement_with_review_state(env
         review.accept(s, ids["_rfp"], ids["1.1"], "sam")
         res = export_service.export_compliance_matrix(s, ids["_rfp"])
     ws = openpyxl.load_workbook(res.path)["Compliance Matrix"]
+    head = [c.value for c in ws[1]]
+    col = {name: i for i, name in enumerate(head)}  # by name, so adding a column never breaks this
     rows = [[c.value for c in r] for r in ws.iter_rows(min_row=2)]
     assert [r[0] for r in rows] == ["1.1", "1.2", "6.1"]
-    states = {r[0]: r[9] for r in rows}
-    assert states == {"1.1": "Approved", "1.2": "Draft", "6.1": "Not included"} and rows[0][10] == "sam"
+    states = {r[0]: r[col["Export state"]] for r in rows}
+    assert states == {"1.1": "Approved", "1.2": "Draft", "6.1": "Not included"}
+    assert rows[0][col["Approved by"]] == "sam"
 
 
 # ====================================================================== export: DOCX

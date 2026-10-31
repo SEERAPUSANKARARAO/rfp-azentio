@@ -22,7 +22,9 @@ from ..llm.gateway import LLMGateway
 from ..models import Answer, Job, Requirement, Rfp
 from ..rag.conflicts import conflicts_by_chunk
 from ..services import audit
+from .assess import assess_rfp
 from .clarify import build_clarifications
+from .interpret import interpret_rfp
 from .pipeline import draft_requirement
 
 log = logging.getLogger(__name__)
@@ -73,6 +75,11 @@ AUTO_RESUME_MAX_WAIT_S = 150.0
 MAX_AUTO_RESUMES = 40
 
 
+def _interpreted(engine: Engine, rfp_id: int) -> bool:
+    with Session(engine) as session:
+        return any(r.interpretation for r in session.exec(select(Requirement).where(Requirement.rfp_id == rfp_id)).all())
+
+
 def _set_message(engine: Engine, job_id: int, message: str) -> None:
     with Session(engine) as session:
         j = session.get(Job, job_id)
@@ -88,10 +95,17 @@ async def run_job(
     concurrency: int | None = None,
     job_id: int | None = None,
     auto_resume_wait_s: float = AUTO_RESUME_MAX_WAIT_S,
+    assess: bool = False,
 ) -> int:
     s = get_settings()
     if job_id is None:
         job_id = create_job(engine, rfp_id)
+
+    # Level 2: understand the requirements first. They do not change when a conflict is settled or a run is resumed, so
+    # this happens once; "Read the requirements" on the Analysis page reads them again on request.
+    if assess and not _interpreted(engine, rfp_id):
+        _set_message(engine, job_id, "Reading the requirements for dependencies and unclear wording")
+        await interpret_rfp(engine, gateway, rfp_id)
 
     sem = asyncio.Semaphore(concurrency or s.draft_concurrency)
     errors = 0
@@ -188,11 +202,21 @@ async def run_job(
 
     if not stop:  # the gap list is only complete once every requirement has an answer
         await build_clarifications(engine, gateway, rfp_id)
+        if assess:  # Level 2: classify each answer's capability and find the gaps. Best effort: drafts are already saved
+            _set_message(engine, job_id, "Drafting finished. Assessing capabilities and gaps")
+            res = await assess_rfp(engine, gateway, rfp_id)
+            note = (f"Assessed {res.get('assessed', 0)} requirement(s)"
+                    + ("; quota ran out, run the assessment again to finish" if res.get("quota_exhausted") else "")
+                    + (f"; {res['failed']} failed" if res.get("failed") else ""))
+            with Session(engine) as session:
+                j = session.get(Job, job_id)
+                j.message, j.updated_at = f"{j.message}. {note}", _now()
+                session.commit()
     return job_id
 
 
 def start_recalc(
-    engine: Engine, gateway: LLMGateway, rfp_id: int, requirement_ids: list[int], reason: str
+    engine: Engine, gateway: LLMGateway, rfp_id: int, requirement_ids: list[int], reason: str, *, assess: bool = False
 ) -> tuple[int | None, bool]:
     """Redraft specific answers after the knowledge base changed under them.
 
@@ -214,14 +238,14 @@ def start_recalc(
         return running_id, True
     job_id = create_job(engine, rfp_id)
     _set_message(engine, job_id, f"Recalculating {len(requirement_ids)} answer(s): {reason}")
-    _running[rfp_id] = asyncio.create_task(run_job(engine, gateway, rfp_id, job_id=job_id))
+    _running[rfp_id] = asyncio.create_task(run_job(engine, gateway, rfp_id, job_id=job_id, assess=assess))
     return job_id, False
 
 
-def start_job(engine: Engine, gateway: LLMGateway, rfp_id: int) -> int | None:
+def start_job(engine: Engine, gateway: LLMGateway, rfp_id: int, *, assess: bool = False) -> int | None:
     """Launch in the background. Returns the job id, or None if one is already running for this RFP."""
     if is_running(rfp_id):
         return None
     job_id = create_job(engine, rfp_id)
-    _running[rfp_id] = asyncio.create_task(run_job(engine, gateway, rfp_id, job_id=job_id))
+    _running[rfp_id] = asyncio.create_task(run_job(engine, gateway, rfp_id, job_id=job_id, assess=assess))
     return job_id

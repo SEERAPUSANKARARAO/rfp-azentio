@@ -167,11 +167,16 @@ def all_audit(limit: int = 200, session: Session = Depends(get_session)) -> list
 class ClarificationBody(Who):
     text: str | None = None
     reason: str | None = None
-    status: str | None = None  # open | approved | dismissed
+    status: str | None = None  # open | approved | answered | dismissed
     requirement_ids: list[str] | None = None
+    priority: str | None = None
+    impact: str | None = None
+    assigned_to: str | None = None
+    answer: str | None = None  # what the customer replied
 
 
-CLAR_STATUSES = ("open", "approved", "dismissed")
+CLAR_STATUSES = ("open", "approved", "answered", "dismissed")
+CLAR_PRIORITIES = ("high", "medium", "low")
 
 
 def _clar(session: Session, rfp_id: int, cid: int) -> ClarificationQuery:
@@ -182,7 +187,9 @@ def _clar(session: Session, rfp_id: int, cid: int) -> ClarificationQuery:
 
 
 def _clar_out(c: ClarificationQuery) -> dict:
-    return {"id": c.id, "text": c.text, "reason": c.reason, "requirement_ids": c.requirement_ids, "status": c.status}
+    return {"id": c.id, "text": c.text, "reason": c.reason, "requirement_ids": c.requirement_ids, "status": c.status,
+            "priority": c.priority, "impact": c.impact, "source": c.source, "assigned_to": c.assigned_to,
+            "answer": c.answer}
 
 
 @router.post("/rfps/{rfp_id}/clarifications", status_code=201)
@@ -209,11 +216,17 @@ def edit_clarification(rfp_id: int, cid: int, body: ClarificationBody, session: 
         raise HTTPException(422, f"Status must be one of: {', '.join(CLAR_STATUSES)}")
     if body.text is not None and not body.text.strip():
         raise HTTPException(422, "A question needs some text.")
+    if body.priority is not None and body.priority not in CLAR_PRIORITIES:
+        raise HTTPException(422, f"Priority must be one of: {', '.join(CLAR_PRIORITIES)}")
+    if body.assigned_to and body.assigned_to not in review.ASSIGNEES:
+        raise HTTPException(422, f"Unknown assignee. Choose one of: {', '.join(review.ASSIGNEES)}")
     before = _clar_out(c)
-    for field in ("text", "reason", "status", "requirement_ids"):
+    for field in ("text", "reason", "status", "requirement_ids", "priority", "impact", "assigned_to", "answer"):
         v = getattr(body, field)
         if v is not None:
             setattr(c, field, v.strip() if isinstance(v, str) else v)
+    if (body.answer or "").strip() and body.status is None:
+        c.status = "answered"  # a reply from the customer settles the question
     audit.record(session, "clarification", "clarification_edited", rfp_id=rfp_id, entity_id=c.id, actor=body.reviewer,
                  payload={"before": before, "after": _clar_out(c)})
     session.commit()

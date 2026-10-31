@@ -17,6 +17,7 @@ from ..freshness import staleness_reasons
 from ..models import ClarificationQuery, Conflict, KbChunk, KbDocument, Rfp
 from ..rag.conflicts import detect_conflicts
 from ..rag.embeddings import get_embedder
+from ..agent import priority
 from ..schemas import AnswerOut, ClarificationOut, JobOut
 from ..services import conflict_resolution
 from ..services.answers import answer_outs
@@ -40,7 +41,7 @@ async def start_draft(rfp_id: int, session: Session = Depends(get_session)):
     gw = get_gateway()
     if not any(p.has_keys() for p in gw.pools.values()):
         raise HTTPException(503, str(NoKeysConfigured("No API keys configured. Add them to rfp-ai/.env.")))
-    if jobs.start_job(get_engine(), gw, rfp_id) is None:
+    if jobs.start_job(get_engine(), gw, rfp_id, assess=True) is None:
         raise HTTPException(409, "A drafting run is already in progress for this RFP.")
     return _job_out(session, rfp_id)
 
@@ -64,8 +65,10 @@ def list_clarifications(rfp_id: int, session: Session = Depends(get_session)):
     if session.get(Rfp, rfp_id) is None:
         raise HTTPException(404, "RFP not found")
     rows = session.exec(select(ClarificationQuery).where(ClarificationQuery.rfp_id == rfp_id)).all()
+    rows.sort(key=lambda c: (priority.RANK.get(c.priority, 1), c.id))
     return [ClarificationOut(id=c.id, text=c.text, reason=c.reason, requirement_ids=c.requirement_ids,
-                             status=c.status) for c in rows]
+                             status=c.status, priority=c.priority, impact=c.impact, source=c.source,
+                             assigned_to=c.assigned_to, answer=c.answer) for c in rows]
 
 
 @router.get("/rfps/{rfp_id}/events")
@@ -143,7 +146,7 @@ async def resolve_conflict(conflict_id: int, body: ResolveBody, session: Session
             if not has_keys:
                 recalculation.append({"rfp_id": rfp_id, "job_id": None, "skipped": "No API keys configured"})
                 continue
-            job_id, merged = jobs.start_recalc(get_engine(), gw, rfp_id, rids, f"conflict on '{c.topic}' was resolved")
+            job_id, merged = jobs.start_recalc(get_engine(), gw, rfp_id, rids, f"conflict on '{c.topic}' was resolved", assess=True)
             recalculation.append({"rfp_id": rfp_id, "job_id": job_id, "requirements": len(rids), "merged": merged})
     docs = {d.id: d for d in session.exec(select(KbDocument)).all()}
     return {"conflict": _conflict_out(session, c, docs), "affected": affected, "recalculation": recalculation}

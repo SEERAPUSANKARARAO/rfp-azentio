@@ -14,7 +14,7 @@ def test_llm_status_works_with_zero_keys(client):
     assert r.status_code == 200
     body = r.json()
     assert {p["provider"] for p in body["providers"]} == {"gemini", "groq", "openrouter"}
-    assert set(body["tasks"]) == {"structure", "draft", "fast"}
+    assert set(body["tasks"]) == {"structure", "draft", "assess", "fast"}
 
 
 def test_schema_and_fts_created(client):

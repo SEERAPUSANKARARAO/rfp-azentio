@@ -59,6 +59,16 @@ tasks:
     - {provider: openrouter, model: "google/gemma-4-31b-it:free", json_mode: true, timeout_s: 60}
     - {provider: openrouter, model: "nvidia/nemotron-3.5-super-vl:free", json_mode: true, timeout_s: 60}
 
+  # Capability classification (standard / configuration / development / third party / not available) of an already
+  # validated answer. A separate task from "draft" so it has its own cache and its own count of calls. Gemini sits
+  # after the second Groq model because it stalled on the probe day.
+  assess:
+    - {provider: groq, model: openai/gpt-oss-120b, json_mode: true}
+    - {provider: groq, model: qwen/qwen3.8-27b, json_mode: true}
+    - {provider: gemini, model: gemini-3.8-flash, json_mode: true, timeout_s: 45}
+    - {provider: openrouter, model: "google/gemma-4-31b-it:free", json_mode: true, timeout_s: 60}
+    - {provider: openrouter, model: "nvidia/nemotron-3.5-super-vl:free", json_mode: true, timeout_s: 60}
+
   # Small, frequent calls: triage batches, chat intent routing, clarification wording.
   fast:
     - {provider: groq, model: openai/gpt-oss-20b, json_mode: true}

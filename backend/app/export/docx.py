@@ -65,6 +65,16 @@ def _appendices(doc: Document, plan: ExportPlan) -> None:
         doc.add_heading("Clarification Questions", 1)
         _add_table(doc, ["Requirements", "Question", "Reason"],
                    [[", ".join(c.requirement_ids), c.text, c.reason] for c in plan.clarifications], [3, 8, 6])
+    gaps = [[r.requirement.req_id, g["type"].replace("_", " "), g["detail"], g["owner"]]
+            for r in plan.rows for g in (r.assessment.gaps if r.assessment else [])]
+    if gaps:
+        doc.add_heading("Gap Analysis", 1)
+        _add_table(doc, ["Ref", "Gap", "What is missing", "Suggested owner"], gaps, [1.6, 3.2, 8, 3.2])
+    if plan.checklist.get("items"):
+        doc.add_heading("Submission Checklist", 1)
+        _add_table(doc, ["Item", "Status", "Detail"],
+                   [[i["label"], {"done": "Done", "outstanding": "Outstanding", "na": "Not applicable"}[i["status"]], i["detail"]]
+                    for i in plan.checklist["items"]], [9, 2.5, 5.5])
     doc.add_heading("Source Index", 1)
     _add_table(doc, ["Source", "Date", "Locations cited", "Used for"],
                [[s["title"], s["date"].isoformat() if s["date"] else "", "; ".join(s["locations"]),

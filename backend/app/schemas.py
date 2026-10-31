@@ -89,6 +89,11 @@ class ClarificationOut(BaseModel):
     reason: str
     requirement_ids: list[str]
     status: str
+    priority: str = "medium"
+    impact: str = ""
+    source: str = "missing_evidence"
+    assigned_to: str | None = None
+    answer: str | None = None
 
 
 class RfpDetail(RfpSummary):
