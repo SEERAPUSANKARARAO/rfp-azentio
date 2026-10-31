@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle, Download, FileSpreadsheet, Info, OctagonAlert } from "lucide-react";
-import { ApiError, download, downloadGet, http, saveBlob, type ExportCheck, type FormatRules } from "../api";
+import { ApiError, CAP_LABEL, CAPABILITY_CHOICES, NEED_LABEL, download, downloadGet, http, saveBlob, type ExportCheck, type FormatRules, type ResponseScheme } from "../api";
 import { Chip, ErrorNote, Modal, Spinner, cx, useToast } from "../ui";
 
 const ICON = { blocking: OctagonAlert, warning: AlertTriangle, info: Info } as const;
@@ -14,6 +14,10 @@ export default function ExportDialog({ rfpId, rules, onClose }: { rfpId: number;
   const [wl, setWl] = useState<string>(String(rules?.word_limit ?? ""));
   const [fileName, setFileName] = useState(rules?.file_name ?? "");
   const [blocked, setBlocked] = useState<ExportCheck | null>(null);
+  const [scheme, setScheme] = useState<ResponseScheme | null>(rules?.response_scheme ?? null);
+  const capScheme = scheme?.kind === "capability" ? scheme : null;
+  const setCode = (n: number, patch: Partial<ResponseScheme["codes"][number]>) =>
+    setScheme((s) => (s ? { ...s, source: "edited", codes: s.codes.map((c, i) => (i === n ? { ...c, ...patch } : c)) } : s));
 
   const check = useQuery({
     queryKey: ["exportcheck", rfpId, approvedOnly],
@@ -22,7 +26,7 @@ export default function ExportDialog({ rfpId, rules, onClose }: { rfpId: number;
   useEffect(() => setBlocked(null), [approvedOnly]);
 
   const saveRules = useMutation({
-    mutationFn: () => http.put<FormatRules>(`/rfps/${rfpId}/format-rules`, { ...rules, word_limit: wl ? Number(wl) : null, file_name: fileName || null }),
+    mutationFn: () => http.put<FormatRules>(`/rfps/${rfpId}/format-rules`, { ...rules, word_limit: wl ? Number(wl) : null, file_name: fileName || null, response_scheme: scheme }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["rfp", rfpId] }); qc.invalidateQueries({ queryKey: ["exportcheck"] }); toast("ok", "Formatting rules confirmed"); },
     onError: (e: Error) => toast("bad", e.message),
   });
@@ -92,6 +96,25 @@ export default function ExportDialog({ rfpId, rules, onClose }: { rfpId: number;
             Compliance wording: {rules?.compliance_codes?.length ? rules.compliance_codes.join(" / ") : "none stated"}
             {rules?.deadline ? ` · Submission due ${rules.deadline}` : ""}{rules?.clarification_deadline ? ` · Questions by ${rules.clarification_deadline}` : ""}
           </p>
+          {capScheme && (
+            <div className="mt-3">
+              <h4 className="mb-1 text-xs font-semibold">Response codes the RFP asks for</h4>
+              <p className="mb-1.5 text-xs text-muted">What a code means comes from its label, not its letter. Fix any that were read wrongly, and say which codes need an explanation, estimate or attachment.</p>
+              <ul className="space-y-1.5">
+                {capScheme.codes.map((c, n) => (
+                  <li key={c.code} className="grid items-center gap-2 text-xs sm:grid-cols-[3.5rem_1fr_9.5rem_auto]">
+                    <span className="chip chip-info justify-center font-mono">{c.code}</span>
+                    <input aria-label={`Label for code ${c.code}`} className="input !py-1" value={c.label} onChange={(e) => setCode(n, { label: e.target.value })} />
+                    <select aria-label={`Meaning of code ${c.code}`} className="input !py-1" value={c.klass} onChange={(e) => setCode(n, { klass: e.target.value })}>
+                      <option value="">Not mapped</option>{CAPABILITY_CHOICES.filter((k) => k !== "unknown").map((k) => <option key={k} value={k}>{CAP_LABEL[k]}</option>)}</select>
+                    <span className="flex flex-wrap gap-2">{Object.keys(NEED_LABEL).map((need) => (
+                      <label key={need} className="flex items-center gap-1"><input type="checkbox" checked={c.needs.includes(need)}
+                        onChange={(e) => setCode(n, { needs: e.target.checked ? [...c.needs, need] : c.needs.filter((x) => x !== need) })} />{need}</label>))}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <button className="btn btn-sm mt-2" disabled={saveRules.isPending} onClick={() => saveRules.mutate()}>Confirm rules</button>
         </div>
 

@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check, Plus, Trash2, X } from "lucide-react";
 import { http, type Clarification } from "../api";
-import { useClarifications, useReviewer, useRfp } from "../hooks";
+import { refreshAnalysis, useClarifications, useReviewer, useRfp } from "../hooks";
 import { Chip, Empty, ErrorNote, Spinner, cx, useToast } from "../ui";
 
 function Row({ rfpId, c }: { rfpId: number; c: Clarification }) {
@@ -11,7 +12,9 @@ function Row({ rfpId, c }: { rfpId: number; c: Clarification }) {
   const toast = useToast();
   const [reviewer] = useReviewer();
   const [text, setText] = useState(c.text);
-  const refresh = () => qc.invalidateQueries({ queryKey: ["clar", rfpId] });
+  const [reply, setReply] = useState(c.answer ?? "");
+  const roles = useQuery({ queryKey: ["assignees", rfpId], queryFn: () => http.get<string[]>(`/rfps/${rfpId}/assignees`) });
+  const refresh = () => { qc.invalidateQueries({ queryKey: ["clar", rfpId] }); refreshAnalysis(qc, rfpId); };
   const patch = useMutation({
     mutationFn: (b: Partial<Clarification>) => http.patch<Clarification>(`/rfps/${rfpId}/clarifications/${c.id}`, { ...b, reviewer }),
     onSuccess: refresh, onError: (e: Error) => toast("bad", e.message),
@@ -22,11 +25,22 @@ function Row({ rfpId, c }: { rfpId: number; c: Clarification }) {
     <li className={cx("card p-4", c.status === "dismissed" && "opacity-60")}>
       <div className="mb-2 flex flex-wrap items-center gap-2">
         {c.requirement_ids.map((r) => <Chip key={r} tone="info">{r}</Chip>)}
-        <Chip tone={c.status === "approved" ? "ok" : c.status === "dismissed" ? "muted" : "warn"}>{c.status === "open" ? "needs a decision" : c.status}</Chip>
+        <Chip tone={c.priority === "high" ? "bad" : c.priority === "medium" ? "warn" : "muted"} title="How much the answer could change design, delivery or price">{c.priority} priority</Chip>
+        {c.impact && <Chip tone="muted">{c.impact}</Chip>}
+        {c.source !== "missing_evidence" && <Chip tone="warn">{c.source === "contradiction" ? "requirements contradict" : "requirement unclear"}</Chip>}
+        <Chip tone={c.status === "approved" || c.status === "answered" ? "ok" : c.status === "dismissed" ? "muted" : "warn"}>{c.status === "open" ? "needs a decision" : c.status}</Chip>
+        <label className="ml-auto flex items-center gap-1.5 text-xs text-muted">Owner
+          <select aria-label="Owner of this question" className="input !w-44 !py-0.5" value={c.assigned_to ?? ""} onChange={(e) => patch.mutate({ assigned_to: e.target.value })}>
+            <option value="">Unassigned</option>{(roles.data ?? []).map((r) => <option key={r} value={r}>{r}</option>)}</select></label>
       </div>
       <label className="sr-only" htmlFor={`q${c.id}`}>Question</label>
       <textarea id={`q${c.id}`} className="input" rows={2} value={text} onChange={(e) => setText(e.target.value)} />
       {c.reason && <p className="mt-1.5 text-xs text-muted"><b>Why we are asking:</b> {c.reason}</p>}
+      <div className="mt-2">
+        <label className="label" htmlFor={`a${c.id}`}>The customer's reply</label>
+        <textarea id={`a${c.id}`} className="input" rows={2} value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Paste or type what they said. It becomes part of the requirement when answers are redrafted." />
+        {reply.trim() !== (c.answer ?? "") && <button className="btn btn-sm mt-1.5" disabled={!reply.trim()} onClick={() => patch.mutate({ answer: reply.trim() })}>Record the reply</button>}
+      </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {dirty && <button className="btn btn-sm btn-primary" onClick={() => patch.mutate({ text })}>Save wording</button>}
         {c.status !== "approved" && <button className="btn btn-sm" onClick={() => patch.mutate({ status: "approved", ...(dirty ? { text } : {}) })}><Check className="size-3.5" /> Approve for the customer</button>}

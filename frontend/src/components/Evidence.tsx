@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FLAG_LABEL, type Answer } from "../api";
 import { useAudit } from "../hooks";
 import { Chip, Gauge, cx, fmtDate, fmtTime } from "../ui";
+import AssessmentPanel from "./AssessmentPanel";
 
 function Banner({ tone, icon, title, children }: { tone: "bad" | "warn" | "info"; icon: React.ReactNode; title: string; children?: React.ReactNode }) {
   const t = { bad: "bg-bad-bg text-bad", warn: "bg-warn-bg text-warn", info: "bg-info-bg text-info" }[tone];
@@ -138,6 +139,8 @@ export default function Evidence({ rfpId, answer, activeMarker, onMarker }: {
             </p>
           )}
         </div>
+
+        <AssessmentPanel rfpId={rfpId} requirementId={answer.requirement_id} />
 
         <div>
           <h3 className="h-section mb-1">Audit trail</h3>

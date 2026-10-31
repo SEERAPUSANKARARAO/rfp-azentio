@@ -151,6 +151,7 @@ export interface FormatRules {
   clarification_deadline?: string | null;
   confirmed?: boolean;
   detected_by?: string;
+  response_scheme?: ResponseScheme | null;
 }
 
 export interface ParseReport {
@@ -186,7 +187,12 @@ export interface Clarification {
   text: string;
   reason: string;
   requirement_ids: string[];
-  status: "open" | "approved" | "dismissed";
+  status: "open" | "approved" | "answered" | "dismissed";
+  priority: "high" | "medium" | "low";
+  impact: string;
+  source: string;
+  assigned_to: string | null;
+  answer: string | null;
 }
 
 export interface AuditEvent {
@@ -292,3 +298,69 @@ export interface ChatMsg {
   meta: { intent?: string; refs?: string[]; select?: number | null; sources?: { marker: number; doc_title: string; location: string; doc_date: string | null; quote: string }[] };
   ts: string;
 }
+
+
+// ------------------------------------------------------------------ Level 2: capability, gaps, readiness, workflow
+export interface SchemeCode { code: string; label: string; klass: string; needs: string[] }
+export interface ResponseScheme { kind: "capability" | "compliance" | ""; codes: SchemeCode[]; source?: string }
+
+export interface Gap { type: string; detail: string; owner: string; critical: boolean }
+export interface Part { what: string; capability: string; passages: number[]; quote: string; reason: string }
+export interface Finding { kind: string; detail: string; source: string; with: string[] }
+export interface Interpretation {
+  depends_on?: { req_id: string; how: string }[];
+  depended_on_by?: string[];
+  components?: string[];
+  spans_multiple?: boolean;
+  findings?: Finding[];
+  external?: string[];
+}
+
+export interface MatrixRow {
+  requirement_id: number; req_id: string; section_code: string; section_title: string; text: string;
+  mandatory: boolean | null; status: string; confidence: number | null; flags: string[]; review_status: string;
+  triage: string | null; assigned_to: string | null; answer_text: string; recheck: string | null;
+  assessed: boolean; assessment_current: boolean; capability: string; code: string; needs: string[];
+  needs_validation: boolean; validation_reasons: string[]; confirmed: boolean; confirmed_by: string | null;
+  estimate: string | null; attachments: string[]; gaps: Gap[]; gap_owner: string; issues: string[]; basis: string;
+  parts: Part[]; assessment_error: string | null; interpretation: Interpretation;
+}
+export interface MatrixResponse {
+  scheme: ResponseScheme | null; assessing: boolean; last_run: Record<string, unknown> | null; rows: MatrixRow[];
+}
+
+export interface Issue { severity: string; code: string; message: string; requirements: string[] }
+export interface Readiness {
+  can_proceed: boolean; in_review: boolean; blockers: Issue[]; warnings: Issue[]; info: Issue[];
+  counts: Record<string, number>;
+}
+export interface ChecklistItem { key: string; label: string; kind: "auto" | "manual"; status: "done" | "outstanding" | "na"; detail: string }
+export interface Checklist { items: ChecklistItem[]; done: number; outstanding: number; complete: boolean }
+export interface GapsSummary {
+  counts: Record<string, number>; by_owner: Record<string, string[]>; requirements_with_gaps: number;
+  items: (Gap & { req_id: string; requirement_id: number; text: string; mandatory: boolean | null })[];
+}
+export interface Workflow {
+  counts: Record<string, number>; labels: Record<string, string>; by_role: Record<string, string[]>;
+  items: { req_id: string; requirement_id: number; state: string; label: string; assigned_to: string | null;
+           suggested_owner: string; clarifications: number[]; mandatory: boolean | null }[];
+}
+
+export const CAP_LABEL: Record<string, string> = {
+  standard: "Standard", configuration: "Configuration", development: "Development", third_party: "Third party",
+  not_available: "Not available", unknown: "Not evidenced", "": "Not assessed",
+};
+export const CAP_TONE: Record<string, "ok" | "warn" | "bad" | "info" | "muted"> = {
+  standard: "ok", configuration: "info", development: "warn", third_party: "warn", not_available: "bad", unknown: "muted", "": "muted",
+};
+export const GAP_LABEL: Record<string, string> = {
+  confirmed_gap: "Confirmed product gap", development_required: "Development required", knowledge_gap: "Knowledge gap",
+  integration_dependency: "Integration dependency", security_concern: "Security concern", documentation_gap: "Documentation gap",
+};
+export const GAP_HELP: Record<string, string> = {
+  confirmed_gap: "The sources say the product does not do this.",
+  knowledge_gap: "The sources are silent. Someone has to find out; it is not a confirmed gap in the product.",
+};
+export const NEED_LABEL: Record<string, string> = { explanation: "an explanation", estimate: "an effort estimate", attachment: "an attachment" };
+export const KIND_LABEL: Record<string, string> = { ambiguous: "Ambiguous", incomplete: "Incomplete", contradictory: "Contradicts another requirement" };
+export const CAPABILITY_CHOICES = ["standard", "configuration", "development", "third_party", "not_available", "unknown"];

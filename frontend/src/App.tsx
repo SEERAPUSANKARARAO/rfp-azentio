@@ -5,6 +5,7 @@ import { cx } from "./ui";
 import RfpList from "./pages/RfpList";
 import Studio from "./pages/Studio";
 import Clarifications from "./pages/Clarifications";
+import Analysis from "./pages/Analysis";
 import Knowledge from "./pages/Knowledge";
 import Audit from "./pages/Audit";
 import Settings from "./pages/Settings";
@@ -60,6 +61,10 @@ function StudioRoute() {
   const { id } = useParams();
   return <Studio key={id} rfpId={Number(id)} />;
 }
+function AnalysisRoute() {
+  const { id } = useParams();
+  return <Analysis key={id} rfpId={Number(id)} />;
+}
 function ClarRoute() {
   const { id } = useParams();
   return <Clarifications key={id} rfpId={Number(id)} />;
@@ -74,6 +79,7 @@ export default function App() {
           <Route path="/" element={<RfpList />} />
           <Route path="/rfps/:id" element={<StudioRoute />} />
           <Route path="/rfps/:id/clarifications" element={<ClarRoute />} />
+          <Route path="/rfps/:id/analysis" element={<AnalysisRoute />} />
           <Route path="/knowledge" element={<Knowledge />} />
           <Route path="/audit" element={<Audit />} />
           <Route path="/settings" element={<Settings />} />

@@ -108,7 +108,7 @@ export default function Studio({ rfpId }: { rfpId: number }) {
           <h1 className="truncate text-base font-bold">{rfp.data.name}</h1>
           <p className="text-xs text-muted">
             {rfp.data.filename}{rfp.data.deadline ? ` · due ${rfp.data.deadline}` : ""}
-            {" · "}<Link className="underline" to={`/rfps/${rfpId}/clarifications`}>{(s?.clarify ?? 0)} to clarify</Link>
+            {" · "}<Link className="underline" to={`/rfps/${rfpId}/clarifications`}>{(s?.clarify ?? 0)} to clarify</Link>{" · "}<Link className="underline" to={`/rfps/${rfpId}/analysis`}>Analysis</Link>
           </p>
         </div>
         {s && (

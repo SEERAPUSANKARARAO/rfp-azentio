@@ -1,7 +1,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  http, type Answer, type AuditEvent, type Clarification, type Conflict, type Job, type KbDoc, type KbStatus,
+  http, type Checklist, type GapsSummary, type MatrixResponse, type Readiness, type Workflow, type Answer, type AuditEvent, type Clarification, type Conflict, type Job, type KbDoc, type KbStatus,
   type LlmStatus, type RfpDetail, type RfpSummary, type Summary,
 } from "./api";
 
@@ -118,4 +118,20 @@ export function replaceAnswer(qc: QueryClient, rfpId: number, updated: Answer) {
   qc.setQueryData<Answer[]>(["answers", rfpId], (old) => old?.map((a) => (a.requirement_id === updated.requirement_id ? updated : a)));
   qc.invalidateQueries({ queryKey: ["summary", rfpId] });
   qc.invalidateQueries({ queryKey: ["audit"] });
+}
+
+
+// ------------------------------------------------------------ Level 2
+export const useMatrix = (rfpId: number) => useQuery({
+  queryKey: ["matrix", rfpId], queryFn: () => http.get<MatrixResponse>(`/rfps/${rfpId}/assessments`),
+  refetchInterval: (q) => (q.state.data?.assessing ? 2500 : false),
+});
+export const useGaps = (rfpId: number) => useQuery({ queryKey: ["gaps", rfpId], queryFn: () => http.get<GapsSummary>(`/rfps/${rfpId}/gaps`) });
+export const useReadiness = (rfpId: number) => useQuery({ queryKey: ["readiness", rfpId], queryFn: () => http.get<Readiness>(`/rfps/${rfpId}/readiness`) });
+export const useChecklist = (rfpId: number) => useQuery({ queryKey: ["checklist", rfpId], queryFn: () => http.get<Checklist>(`/rfps/${rfpId}/checklist`) });
+export const useWorkflow = (rfpId: number) => useQuery({ queryKey: ["workflow", rfpId], queryFn: () => http.get<Workflow>(`/rfps/${rfpId}/workflow`) });
+
+/** Everything Level 2 shows is derived from the same answers, so refresh it all together. */
+export function refreshAnalysis(qc: QueryClient, rfpId: number) {
+  ["matrix", "gaps", "readiness", "checklist", "workflow", "clar", "answers"].forEach((k) => qc.invalidateQueries({ queryKey: [k, rfpId] }));
 }

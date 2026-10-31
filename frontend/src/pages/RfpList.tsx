@@ -85,6 +85,9 @@ function Analysis({ id, onClose }: { id: number; onClose: () => void }) {
           <ul className="space-y-1 text-sm">
             <li>Words per answer: <b>{rules.word_limit ?? "not stated"}</b></li>
             <li>Compliance wording: <b>{rules.compliance_codes?.length ? rules.compliance_codes.join(" / ") : "not stated"}</b></li>
+            {rules.response_scheme?.kind === "capability" && (
+              <li>Response codes: {rules.response_scheme.codes.map((c) => <span key={c.code} className="mr-1.5 whitespace-nowrap"><b className="font-mono">{c.code}</b> {c.label}{c.needs.length ? ` (needs ${c.needs.join(", ")})` : ""}{c.klass ? "" : " (not mapped)"}</span>)}</li>
+            )}
             <li>File name: <b className="break-all">{rules.file_name ?? "not stated"}</b></li>
             <li>Questions by: <b>{rules.clarification_deadline ? fmtDate(rules.clarification_deadline) : "not stated"}</b></li>
             <li>Submission due: <b>{rules.deadline ? fmtDate(rules.deadline) : "not stated"}</b></li>
