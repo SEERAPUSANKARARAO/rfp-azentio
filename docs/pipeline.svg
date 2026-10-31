@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 602" width="1200" height="602" font-family="'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">How one requirement becomes a checked answer</title><desc id="d">Parse, owner triage, retrieve, draft with a model, validate in code, score and flag, then the Sales Engineer reviews and exports. Pricing and legal questions go to an owner and never reach the model.</desc>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect width="1200" height="602" fill="#ffffff"/>
+<rect x="20" y="14" width="170" height="137" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="32" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">1  Parse</text>
+<text x="32" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">IDs, order, sections</text>
+<text x="32" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">and mandatory or</text>
+<text x="32" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">optional come from</text>
+<text x="32" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">the file, never from</text>
+<text x="32" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">a model.</text>
+<rect x="218" y="14" width="170" height="137" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="230" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">2  Owner triage</text>
+<text x="230" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">Pricing, liability,</text>
+<text x="230" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">SLAs, payment terms</text>
+<text x="230" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">and named references</text>
+<text x="230" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">are matched by</text>
+<text x="230" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">pattern.</text>
+<path d="M192,82.5 L216,82.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="416" y="14" width="170" height="137" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="428" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">3  Retrieve</text>
+<text x="428" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">Keyword search plus</text>
+<text x="428" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">local embeddings.</text>
+<text x="428" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">Excluded: do-not-</text>
+<text x="428" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">reuse, internal,</text>
+<text x="428" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">superseded sources.</text>
+<path d="M390,82.5 L414,82.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="614" y="14" width="170" height="137" rx="8" fill="#fff1de" stroke="#d98a1f" stroke-width="1.5"/>
+<text x="626" y="36" font-size="13.5" fill="#7a4100" text-anchor="start" font-weight="700">4  Draft</text>
+<rect x="727" y="21" width="49" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="751.5" y="34" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="626" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">One model call</text>
+<text x="626" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">returns a status and</text>
+<text x="626" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">statements. Each</text>
+<text x="626" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">cites passages and</text>
+<text x="626" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">quotes them.</text>
+<path d="M588,82.5 L612,82.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="812" y="14" width="170" height="137" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="824" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">5  Validate</text>
+<text x="824" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">A statement stays</text>
+<text x="824" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">only if its passage</text>
+<text x="824" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">is real, its figures</text>
+<text x="824" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">and standards appear</text>
+<text x="824" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">in it, and its quote</text>
+<text x="824" y="131" font-size="12" fill="#1f1f1f" text-anchor="start">is verbatim.</text>
+<path d="M786,82.5 L810,82.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="1010" y="14" width="170" height="137" rx="8" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="1022" y="36" font-size="13.5" fill="#16501c" text-anchor="start" font-weight="700">6  Score and flag</text>
+<text x="1022" y="51" font-size="12" fill="#1f1f1f" text-anchor="start">Confidence is</text>
+<text x="1022" y="67" font-size="12" fill="#1f1f1f" text-anchor="start">computed, not self-</text>
+<text x="1022" y="83" font-size="12" fill="#1f1f1f" text-anchor="start">reported. Flags:</text>
+<text x="1022" y="99" font-size="12" fill="#1f1f1f" text-anchor="start">stale, conflicting,</text>
+<text x="1022" y="115" font-size="12" fill="#1f1f1f" text-anchor="start">missing, unsupported,</text>
+<text x="1022" y="131" font-size="12" fill="#1f1f1f" text-anchor="start">injection.</text>
+<path d="M984,82.5 L1008,82.5" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="194" y="197" width="222" height="105" rx="8" fill="#f3e8fb" stroke="#8e5bb5" stroke-width="1.5"/>
+<text x="206" y="219" font-size="13.5" fill="#4a216b" text-anchor="start" font-weight="700">Owner queue</text>
+<text x="206" y="234" font-size="12" fill="#1f1f1f" text-anchor="start">No draft. Assigned to the</text>
+<text x="206" y="250" font-size="12" fill="#1f1f1f" text-anchor="start">Commercial Desk, Legal or</text>
+<text x="206" y="266" font-size="12" fill="#1f1f1f" text-anchor="start">Account Management, with the</text>
+<text x="206" y="282" font-size="12" fill="#1f1f1f" text-anchor="start">reason.</text>
+<rect x="760" y="197" width="222" height="121" rx="8" fill="#f7f7f7" stroke="#9a9a9a" stroke-width="1.5"/>
+<text x="772" y="219" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">Nothing supported</text>
+<text x="772" y="234" font-size="12" fill="#1f1f1f" text-anchor="start">Status becomes Cannot</text>
+<text x="772" y="250" font-size="12" fill="#1f1f1f" text-anchor="start">Confirm, a clarification</text>
+<text x="772" y="266" font-size="12" fill="#1f1f1f" text-anchor="start">question is raised, and</text>
+<text x="772" y="282" font-size="12" fill="#1f1f1f" text-anchor="start">removed sentences are</text>
+<text x="772" y="298" font-size="12" fill="#1f1f1f" text-anchor="start">reported to the reviewer.</text>
+<path d="M303.0,151 L303.0,197" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="313.0" y="166" width="58.199999999999996" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="319.0" y="179" font-size="12" fill="#333" text-anchor="start" font-style="italic">matched</text>
+<path d="M897.0,151 L897.0,197" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="907.0" y="166" width="117.6" height="19" rx="4" fill="#ffffff" fill-opacity="0.92"/>
+<text x="913.0" y="179" font-size="12" fill="#333" text-anchor="start" font-style="italic">nothing survives</text>
+<path d="M1095.0,151 L1095.0,358" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="20" y="358" width="1160" height="89" rx="8" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="32" y="380" font-size="13.5" fill="#173a85" text-anchor="start" font-weight="700">7  Sales Engineer review. Nothing is final until it is accepted.</text>
+<text x="32" y="395" font-size="12" fill="#1f1f1f" text-anchor="start">Accept, edit, regenerate with an instruction, flag for an owner, or add a fact the sources lack (stored as a dated source in the reviewer&#x27;s name and cited as SE-</text>
+<text x="32" y="411" font-size="12" fill="#1f1f1f" text-anchor="start">provided). Editing or flagging an approved answer withdraws the approval. A resolved knowledge-base conflict withdraws approvals and redrafts the answers that</text>
+<text x="32" y="427" font-size="12" fill="#1f1f1f" text-anchor="start">relied on it.</text>
+<path d="M600,447 L600,481" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+<rect x="20" y="481" width="1160" height="73" rx="8" fill="#f7f7f7" stroke="#9a9a9a" stroke-width="1.5"/>
+<text x="32" y="503" font-size="13.5" fill="#2b2b2b" text-anchor="start" font-weight="700">8  Export in the RFP&#x27;s own format</text>
+<text x="32" y="518" font-size="12" fill="#1f1f1f" text-anchor="start">Approved answers only by default. The RFP&#x27;s compliance wording (C / PC / NC), file name and word limit, requirement IDs, and the sources for each answer. A copy</text>
+<text x="32" y="534" font-size="12" fill="#1f1f1f" text-anchor="start">that includes drafts is named _DRAFT and marks every unapproved answer. Cannot Confirm never gets a compliance code.</text>
+<rect x="20" y="572" width="22" height="15" rx="4" fill="#eaf5ea" stroke="#4f9a4f" stroke-width="1.5"/>
+<text x="50" y="584" font-size="12" fill="#333" text-anchor="start">deterministic code</text>
+<rect x="194.8" y="572" width="22" height="15" rx="4" fill="#e8f0fe" stroke="#4a78d4" stroke-width="1.5"/>
+<text x="224.8" y="584" font-size="12" fill="#333" text-anchor="start">human decision</text>
+<rect x="343.2" y="572" width="22" height="15" rx="4" fill="#f3e8fb" stroke="#8e5bb5" stroke-width="1.5"/>
+<text x="373.2" y="584" font-size="12" fill="#333" text-anchor="start">routed to an owner</text>
+<rect x="518.0" y="572" width="22" height="15" rx="4" fill="#f7f7f7" stroke="#9a9a9a" stroke-width="1.5"/>
+<text x="548.0" y="584" font-size="12" fill="#333" text-anchor="start">output</text>
+<rect x="613.6" y="571" width="46" height="18" rx="9" fill="#ffd9a0" stroke="#d98a1f"/>
+<text x="636.6" y="584" font-size="11" fill="#5c3200" text-anchor="middle" font-weight="700">model</text>
+<text x="669.6" y="584" font-size="12" fill="#333" text-anchor="start">= this part calls a language model</text>
+</svg>

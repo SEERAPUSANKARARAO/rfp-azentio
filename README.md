@@ -145,7 +145,7 @@ Set `AS_OF_DATE=2026-10-31` in `.env` to pin "today" so staleness results are re
 
 ## How the LLM layer handles daily limits
 
-- Each task (`structure`, `draft`, `fast`) has an ordered chain in `models.yaml`.
+- Each task (`draft` and `fast`; a `structure` chain is configured but not used yet) has an ordered chain in `models.yaml`.
 - Quota is tracked per (key, model). A 429 puts that pair on cooldown, or marks it exhausted until the
   provider's daily reset when the error says "per day". The next key is tried, then the next model.
 - State is stored in `data/llm.db`, so a restart does not forget that a key is spent.
