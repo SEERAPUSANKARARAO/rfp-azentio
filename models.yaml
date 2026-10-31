@@ -1,0 +1,69 @@
+# Task -> ordered fallback chain.
+#
+# The gateway walks each chain top to bottom. For every entry it tries each healthy key in that
+# provider's pool (least-recently-used first):
+#   429 per minute   that (key, model) cools down; the next key is tried, then the next entry
+#   429 per day      that (key, model) is marked exhausted until the provider's reset
+#   fast 5xx / 503   that (key, model) cools down for 30s; the next key is tried
+#   timeout          the WHOLE model is skipped on every key for 2 minutes (a stall is model-wide,
+#                    and waiting once per key would be minutes of dead time)
+#
+# Order = Groq first (fast and dependable), Gemini as overflow, free OpenRouter as last resort.
+#
+# Model IDs change fast on free tiers, and a model can be LISTED yet unusable. After editing:
+#   cd backend && .venv/bin/python ../scripts/list_models.py --probe
+#
+# Verified with real calls on 2026-10-31 (each answered a structured JSON probe):
+#   groq: gpt-oss-120b, gpt-oss-20b, qwen3.8-27b. All fast (0.2-0.8s), all three keys accepted.
+#   gemini: 3.1-flash-lite worked on all 3 keys (~1.6s); 3.5-flash-lite on key 1. But Gemini was
+#     erratic that day: 3.8-flash answered in 4s on key 1, returned 503 "high demand" on keys 2 and
+#     3, and some calls to 3.8-flash and 3.1-flash-lite stalled past 60s. Hence Gemini is overflow.
+#   openrouter: nvidia/nemotron-3.5-super-vl:free works but is slow (one probe took ~2 minutes in
+#     total). gemma-4-31b was rate-limited upstream when probed; it is listed first because it
+#     fails fast when congested and is quick when available.
+# gemini-2.5-flash and 2.5-flash-lite are still listed by Google but closed to new users.
+#
+# Quota is tracked per (key, model), so extra Groq/Gemini models add independent budgets. OpenRouter's
+# free tier limits the whole account across all :free models, so an extra OpenRouter model adds
+# resilience to congestion, not quota. All three OpenRouter accounts are on the free tier (no credits).
+#
+# timeout_s caps one call. json_mode asks the provider for native JSON; set false for models that
+# reject response_format.
+
+providers:
+  gemini:
+    kind: gemini
+  groq:
+    kind: openai_compat
+    base_url: https://api.groq.com/openai/v1
+  openrouter:
+    kind: openai_compat
+    base_url: https://openrouter.ai/api/v1
+
+tasks:
+  # Long documents -> structured JSON (RFP analysis, format rules, column mapping).
+  # If a document is too large for Groq's limits, Groq rejects it and Gemini (1M context) takes it.
+  structure:
+    - {provider: groq, model: openai/gpt-oss-120b, json_mode: true}
+    - {provider: gemini, model: gemini-3.8-flash, json_mode: true, timeout_s: 45}
+    - {provider: groq, model: qwen/qwen3.8-27b, json_mode: true}
+    - {provider: gemini, model: gemini-3.1-flash-lite, json_mode: true, timeout_s: 30}
+    - {provider: openrouter, model: "google/gemma-4-31b-it:free", json_mode: true, timeout_s: 60}
+    - {provider: openrouter, model: "nvidia/nemotron-3.5-super-vl:free", json_mode: true, timeout_s: 60}
+
+  # Grounded answer drafting + compliance assessment. Quality matters most.
+  draft:
+    - {provider: groq, model: openai/gpt-oss-120b, json_mode: true}
+    - {provider: gemini, model: gemini-3.8-flash, json_mode: true, timeout_s: 45}
+    - {provider: groq, model: qwen/qwen3.8-27b, json_mode: true}
+    - {provider: openrouter, model: "google/gemma-4-31b-it:free", json_mode: true, timeout_s: 60}
+    - {provider: openrouter, model: "nvidia/nemotron-3.5-super-vl:free", json_mode: true, timeout_s: 60}
+
+  # Small, frequent calls: triage batches, chat intent routing, clarification wording.
+  fast:
+    - {provider: groq, model: openai/gpt-oss-20b, json_mode: true}
+    - {provider: groq, model: qwen/qwen3.8-27b, json_mode: true}
+    - {provider: gemini, model: gemini-3.1-flash-lite, json_mode: true, timeout_s: 30}
+    - {provider: gemini, model: gemini-3.5-flash-lite, json_mode: true, timeout_s: 30}
+    - {provider: openrouter, model: "google/gemma-4-31b-it:free", json_mode: true, timeout_s: 60}
+    - {provider: openrouter, model: "nvidia/nemotron-3.5-super-vl:free", json_mode: true, timeout_s: 60}

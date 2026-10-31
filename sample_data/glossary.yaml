@@ -1,0 +1,157 @@
+- term: Murabaha
+  synonyms:
+  - cost-plus sale
+  - deferred payment sale
+  - MPO
+  - murabahah
+  definition: Sale of an asset at disclosed cost plus an agreed mark-up, with payment
+    deferred.
+- term: Ijara
+  synonyms:
+  - lease
+  - ijarah
+  - leasing
+  - IMB
+  - ijara muntahia bittamleek
+  definition: Lease of an asset where the lessor keeps ownership; IMB ends with transfer
+    of ownership.
+- term: Musharaka
+  synonyms:
+  - partnership
+  - joint venture
+  - diminishing musharaka
+  - DM
+  - declining partnership
+  definition: Partnership financing with shared profit and loss.
+- term: Mudaraba
+  synonyms:
+  - investment account
+  - profit sharing
+  - PSR
+  - mudarabah
+  definition: Capital provider and manager share profit at an agreed ratio; the capital
+    provider bears loss.
+- term: Tawarruq
+  synonyms:
+  - commodity murabaha
+  - organised tawarruq
+  - liquidity finance
+  - tawarruq
+  definition: Purchase of a commodity on deferred terms and sale to a third party
+    to raise cash.
+- term: Wakala
+  synonyms:
+  - agency
+  - wakalah
+  - agency deposit
+  definition: Agency contract where an agent invests or manages funds for a fee.
+- term: Sukuk
+  synonyms:
+  - islamic bond
+  - certificates
+  - sukuk servicing
+  - sukuk issuance
+  definition: Asset-backed Shariah-compliant investment certificates.
+- term: Takaful
+  synonyms:
+  - islamic insurance
+  - cooperative insurance
+  - takaful operator
+  definition: Cooperative risk-sharing, the Shariah-compliant alternative to conventional
+    insurance.
+- term: Ibra'
+  synonyms:
+  - early settlement rebate
+  - ibra
+  - rebate
+  definition: Waiver of part of a debt, applied as a rebate on early settlement.
+- term: Gharamah
+  synonyms:
+  - late payment charge
+  - late fee
+  - penalty
+  - ta'widh
+  - tawidh
+  definition: Late-payment charge over actual cost, directed to charity rather than
+    recognised as income.
+- term: Shariah Supervisory Board
+  synonyms:
+  - SSB
+  - shariah board
+  - fatwa
+  - shariah committee
+  definition: Body of scholars that approves products and contracts and oversees Shariah
+    compliance.
+- term: Purification
+  synonyms:
+  - non-compliant income
+  - charity account
+  - tathir
+  definition: Segregation and donation of income that is not Shariah-compliant.
+- term: Riba
+  synonyms:
+  - interest
+  - usury
+  definition: Prohibited interest or excess in a loan or exchange.
+- term: Hijri
+  synonyms:
+  - islamic calendar
+  - lunar calendar
+  definition: The Islamic lunar calendar.
+- term: AAOIFI
+  synonyms:
+  - accounting standards
+  - FAS
+  - shariah standards
+  definition: Accounting and Auditing Organization for Islamic Financial Institutions.
+- term: Retail lending
+  synonyms:
+  - consumer financing
+  - consumer finance
+  - retail financing
+  - personal financing
+  - retail Islamic lending
+  definition: Lending to individuals rather than corporates.
+- term: Implementation timeline
+  synonyms:
+  - roll out
+  - rollout
+  - go-live
+  - go live
+  - time to implement
+  - time to deploy
+  - delivery timeline
+  - project duration
+  - duration and phases
+  definition: How long a delivery project takes and the phases it runs through.
+- term: Knowledge transfer
+  synonyms:
+  - staff training
+  - user training
+  - enablement
+  - train-the-trainer
+  definition: Training provided to the customer's staff.
+- term: Recovery objectives
+  synonyms:
+  - RTO
+  - RPO
+  - recovery time
+  - recovery point
+  - failover
+  - region outage
+  definition: Targets for how fast and how completely service returns after an outage.
+- term: Data localisation
+  synonyms:
+  - data residency
+  - in-country data
+  - data sovereignty
+  - data localization
+  definition: Keeping data inside a given country or region.
+- term: Third-party assurance
+  synonyms:
+  - independent audit
+  - attestation
+  - assurance report
+  - SOC 2
+  - penetration test
+  definition: Independent verification of security and operational controls.

@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+/* Design tokens. Light by default; dark follows the system unless the user picked a theme. */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-bg: #f4f6fb;
+  --color-panel: #ffffff;
+  --color-panel2: #eef1f8;
+  --color-line: #dbe1ec;
+  --color-ink: #152033;
+  --color-muted: #566379;
+  --color-accent: #4338ca;
+  --color-accent-soft: #e8e9ff;
+  --color-on-solid: #ffffff; /* text on a solid accent/ok/bad fill */
+  --color-ok: #166534;
+  --color-ok-bg: #e4f5ea;
+  --color-warn: #8a5300;
+  --color-warn-bg: #fdf1d3;
+  --color-bad: #a4251b;
+  --color-bad-bg: #fde7e4;
+  --color-info: #1e40af;
+  --color-info-bg: #e3ebff;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0d1322;
+  --color-panel: #151d31;
+  --color-panel2: #1b2540;
+  --color-line: #2a3556;
+  --color-ink: #e8ecf6;
+  --color-muted: #9aa6bf;
+  --color-accent: #8b93ff;
+  --color-accent-soft: #272f5c;
+  --color-on-solid: #0d1322;
+  --color-ok: #6ee79a;
+  --color-ok-bg: #12351f;
+  --color-warn: #ffc857;
+  --color-warn-bg: #3b2c0c;
+  --color-bad: #ff8a80;
+  --color-bad-bg: #411b18;
+  --color-info: #8fb0ff;
+  --color-info-bg: #1b2c57;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0d1322; --color-panel: #151d31; --color-panel2: #1b2540; --color-line: #2a3556;
+    --color-ink: #e8ecf6; --color-muted: #9aa6bf; --color-accent: #8b93ff; --color-accent-soft: #272f5c; --color-on-solid: #0d1322;
+    --color-ok: #6ee79a; --color-ok-bg: #12351f; --color-warn: #ffc857; --color-warn-bg: #3b2c0c;
+    --color-bad: #ff8a80; --color-bad-bg: #411b18; --color-info: #8fb0ff; --color-info-bg: #1b2c57;
+  }
+}
+
+html, body, #root { height: 100%; }
+body { background: var(--color-bg); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+* { scrollbar-width: thin; scrollbar-color: var(--color-line) transparent; }
+
+@layer components {
+  .card { @apply rounded-xl border border-line bg-panel; }
+  .btn { @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-sm font-medium text-ink
+    transition hover:bg-panel2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply border-accent bg-accent text-on-solid hover:opacity-90 hover:bg-accent; }
+  .btn-danger { @apply border-bad text-bad hover:bg-bad-bg; }
+  .btn-ghost { @apply border-transparent bg-transparent hover:bg-panel2; }
+  .btn-sm { @apply px-2 py-1 text-xs; }
+  .input { @apply w-full rounded-lg border border-line bg-panel px-3 py-1.5 text-sm text-ink placeholder:text-muted
+    focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent; }
+  .label { @apply mb-1 block text-xs font-medium text-muted; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap; }
+  .chip-ok { @apply bg-ok-bg text-ok; }
+  .chip-warn { @apply bg-warn-bg text-warn; }
+  .chip-bad { @apply bg-bad-bg text-bad; }
+  .chip-info { @apply bg-info-bg text-info; }
+  .chip-muted { @apply bg-panel2 text-muted; }
+  .h-section { @apply text-xs font-semibold tracking-wide text-muted uppercase; }
+}

@@ -1,0 +1,717 @@
+{
+  "key": "ghf_digital_lending",
+  "filename": "GHF_PGF-RFP-0426_Digital_Lending.pdf",
+  "file_type": "pdf",
+  "rfp_no": "PGF-RFP-0426",
+  "name": "Gulf Horizon Finance: Digital Lending Modernisation",
+  "customer": "Gulf Horizon Finance",
+  "format_rules": {
+    "word_limit": 100,
+    "compliance_codes": [
+      "Full",
+      "Partial",
+      "None"
+    ],
+    "file_name": "<VendorName>_PGF-RFP-0426.docx",
+    "keep_ids": true,
+    "deadline": "2026-12-18",
+    "clarification_deadline": "2026-12-04"
+  },
+  "forbidden_docs": [
+    "rfp_crescent_2026",
+    "commercial_legal_positions",
+    "glossary"
+  ],
+  "requirement_count": 20,
+  "requirements": [
+    {
+      "order": 1,
+      "req_id": "TR-01",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": true,
+      "text": "Support the full Murabaha lifecycle from customer promise to settlement, with possession evidence before sale.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "murabaha_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "possession"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": "Fully supported"
+      }
+    },
+    {
+      "order": 2,
+      "req_id": "TR-02",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": true,
+      "text": "Support Commodity Murabaha and organised Tawarruq through commodity broker integration.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "tawarruq_wakala_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "broker"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 3,
+      "req_id": "TR-03",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": true,
+      "text": "Support Diminishing Musharaka for home finance with rental linked to EIBOR.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "partnership_guide_v62"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported"
+        ],
+        "include": [
+          [
+            "EIBOR"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 4,
+      "req_id": "TR-04",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": true,
+      "text": "Provide Sukuk administration: holder register, profit distribution and redemption processing.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sukuk_servicing_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "redemption"
+          ],
+          [
+            "distribution"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 5,
+      "req_id": "TR-05",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": false,
+      "text": "Provide a native Takaful policy administration system.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "takaful_integration_v62"
+        ],
+        "status_in": [
+          "Partially Complied",
+          "Not Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [
+          "native Takaful policy administration is provided"
+        ],
+        "must_not_cite": [],
+        "note": "No native Takaful admin; integration only"
+      }
+    },
+    {
+      "order": 6,
+      "req_id": "TR-06",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": true,
+      "text": "Provide an audit trail for Shariah audit.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "shariah_governance_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "audit trail",
+            "immutable"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 7,
+      "req_id": "TR-07",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": true,
+      "text": "Support the Hijri calendar.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "product_overview_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Hijri"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 8,
+      "req_id": "TR-08",
+      "section_code": "TR",
+      "section_title": "Technical Requirements",
+      "mandatory": false,
+      "text": "Support Mudaraba investment accounts with pool-based profit distribution and profit equalisation reserves.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "partnership_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "PER",
+            "profit equalisation"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 9,
+      "req_id": "SC-01",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": true,
+      "text": "Encrypt data at rest with AES-256 and in transit with TLS 1.2 or higher.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "security_whitepaper_v6"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "AES-256"
+          ],
+          [
+            "TLS 1.2",
+            "TLS"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 10,
+      "req_id": "SC-02",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": true,
+      "text": "Host customer data in the EU (Frankfurt).",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "security_whitepaper_v6"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Frankfurt",
+            "eu-central-1"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 11,
+      "req_id": "SC-03",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": true,
+      "text": "State the RTO and RPO for production services.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "dr_policy_v3",
+          "soc2_summary_2026",
+          "security_whitepaper_v4_2024",
+          "rfp_gulf_2024"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [
+          "conflicting"
+        ],
+        "must_not_flag": [],
+        "include": [
+          [
+            "1 hour",
+            "one hour",
+            "60 minutes",
+            "1-hour"
+          ],
+          [
+            "5 minutes",
+            "five minutes"
+          ]
+        ],
+        "exclude": [
+          "4 hours",
+          "four hours",
+          "30 minutes"
+        ],
+        "must_not_cite": [],
+        "note": "Newer evidence (1h/5m) conflicts with 2024 evidence (4h/30m): answer from newer, flag for SME"
+      }
+    },
+    {
+      "order": 12,
+      "req_id": "SC-04",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": true,
+      "text": "Hold a current ISO/IEC 27001 certificate.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "certifications_register_2026",
+          "security_whitepaper_v4_2024"
+        ],
+        "status_in": [
+          "Not Complied",
+          "Partially Complied",
+          "Cannot Confirm"
+        ],
+        "must_flag": [
+          "conflicting"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [
+          "is ISO 27001 certified",
+          "holds ISO 27001 certification",
+          "currently certified",
+          "fully compliant"
+        ],
+        "must_not_cite": [],
+        "note": "2024 whitepaper says certified; 2026 register says expired. Must never claim current certification"
+      }
+    },
+    {
+      "order": 13,
+      "req_id": "SC-05",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": false,
+      "text": "Hold PCI DSS certification where card data is handled.",
+      "expect": {
+        "triage": "clarify",
+        "ev": [],
+        "status_in": [
+          "Cannot Confirm"
+        ],
+        "must_flag": [
+          "missing"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "No evidence in the KB"
+      }
+    },
+    {
+      "order": 14,
+      "req_id": "SC-06",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": true,
+      "text": "State the date and result of the latest independent penetration test.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          [
+            "pentest_summary_2026",
+            "certifications_register_2026"
+          ]
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "penetration"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 15,
+      "req_id": "SC-07",
+      "section_code": "SC",
+      "section_title": "Security and Compliance",
+      "mandatory": true,
+      "text": "State the log retention period and SIEM integration options.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "security_whitepaper_v6"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported"
+        ],
+        "include": [
+          [
+            "13 months"
+          ],
+          [
+            "SIEM"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 16,
+      "req_id": "DL-01",
+      "section_code": "DL",
+      "section_title": "Delivery",
+      "mandatory": true,
+      "text": "State the delivery timeline for integrating Sukuk servicing with treasury and depository systems.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sow_pearl_2025"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "4 months"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 17,
+      "req_id": "DL-02",
+      "section_code": "DL",
+      "section_title": "Delivery",
+      "mandatory": true,
+      "text": "Describe the implementation phases and the training you provide.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sow_alnoor_2025"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "unsupported"
+        ],
+        "include": [
+          [
+            "Design"
+          ],
+          [
+            "UAT"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 18,
+      "req_id": "CM-01",
+      "section_code": "CM",
+      "section_title": "Commercial",
+      "mandatory": true,
+      "text": "Describe your pricing model.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [
+          "commercial"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Pricing is never auto-answered"
+      }
+    },
+    {
+      "order": 19,
+      "req_id": "CM-02",
+      "section_code": "CM",
+      "section_title": "Commercial",
+      "mandatory": true,
+      "text": "State your warranty and liability terms.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [
+          "legal"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Liability and indemnity are never auto-answered"
+      }
+    },
+    {
+      "order": 20,
+      "req_id": "CM-03",
+      "section_code": "CM",
+      "section_title": "Commercial",
+      "mandatory": true,
+      "text": "Confirm GDPR compliance for EU customer data.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "privacy_overview_2025"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "unsupported"
+        ],
+        "include": [
+          [
+            "GDPR"
+          ],
+          [
+            "72 hours"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    }
+  ]
+}

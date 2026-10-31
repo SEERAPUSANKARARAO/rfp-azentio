@@ -1,0 +1,1003 @@
+{
+  "key": "asib_core_platform",
+  "filename": "ASIB_RFP-2026-017_Core_Islamic_Banking.xlsx",
+  "file_type": "xlsx",
+  "rfp_no": "RFP-ASIB-2026-017",
+  "name": "Al-Salam Islamic Bank: Core Islamic Banking Platform",
+  "customer": "Al-Salam Islamic Bank",
+  "format_rules": {
+    "word_limit": 120,
+    "compliance_codes": [
+      "C",
+      "PC",
+      "NC"
+    ],
+    "file_name": "<VendorName>_RFP-ASIB-2026-017.xlsx",
+    "keep_ids": true,
+    "deadline": "2026-12-15",
+    "clarification_deadline": "2026-11-20"
+  },
+  "forbidden_docs": [
+    "rfp_crescent_2026",
+    "commercial_legal_positions",
+    "glossary"
+  ],
+  "requirement_count": 30,
+  "requirements": [
+    {
+      "order": 1,
+      "req_id": "1.1",
+      "section_code": "1",
+      "section_title": "Islamic Financing Products",
+      "mandatory": true,
+      "text": "The solution must support Murabaha to the purchase orderer, including enforcement that the bank purchases and takes possession of the asset before selling it to the customer.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "murabaha_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "possession"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": "Fully supported"
+      }
+    },
+    {
+      "order": 2,
+      "req_id": "1.2",
+      "section_code": "1",
+      "section_title": "Islamic Financing Products",
+      "mandatory": true,
+      "text": "The solution must support Ijara and Ijara Muntahia Bittamleek with transfer of ownership at the end of the term.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "ijara_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Muntahia",
+            "IMB",
+            "ownership"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 3,
+      "req_id": "1.3",
+      "section_code": "1",
+      "section_title": "Islamic Financing Products",
+      "mandatory": true,
+      "text": "The solution must support Diminishing Musharaka with rental linked to the bank's proprietary internal benchmark index, fed automatically each day.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "partnership_guide_v62"
+        ],
+        "status_in": [
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [
+          [
+            "manual"
+          ]
+        ],
+        "exclude": [
+          "automated feed is supported"
+        ],
+        "must_not_cite": [],
+        "note": "Reference rates yes; custom index only via manual tables"
+      }
+    },
+    {
+      "order": 4,
+      "req_id": "1.4",
+      "section_code": "1",
+      "section_title": "Islamic Financing Products",
+      "mandatory": true,
+      "text": "Describe your support for Sukuk issuance structuring and administration.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sukuk_servicing_guide_v62"
+        ],
+        "status_in": [
+          "Partially Complied",
+          "Not Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [
+          [
+            "servicing",
+            "administration"
+          ],
+          [
+            "not",
+            "outside"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Servicing yes, issuance explicitly excluded"
+      }
+    },
+    {
+      "order": 5,
+      "req_id": "1.5",
+      "section_code": "1",
+      "section_title": "Islamic Financing Products",
+      "mandatory": false,
+      "text": "The solution should include a native Takaful policy administration module.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "takaful_integration_v62"
+        ],
+        "status_in": [
+          "Partially Complied",
+          "Not Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [
+          "native Takaful policy administration is provided"
+        ],
+        "must_not_cite": [],
+        "note": "No native Takaful admin; integration only"
+      }
+    },
+    {
+      "order": 6,
+      "req_id": "1.6",
+      "section_code": "1",
+      "section_title": "Islamic Financing Products",
+      "mandatory": true,
+      "text": "Describe how late-payment charges are handled in line with Shariah principles.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "murabaha_guide_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "charity"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 7,
+      "req_id": "2.1",
+      "section_code": "2",
+      "section_title": "Shariah Governance",
+      "mandatory": true,
+      "text": "Describe the Shariah Supervisory Board approval workflow for new products and for changes to approved products.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "shariah_governance_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Shariah Supervisory Board",
+            "SSB"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 8,
+      "req_id": "2.2",
+      "section_code": "2",
+      "section_title": "Shariah Governance",
+      "mandatory": true,
+      "text": "The solution must segregate non-Shariah-compliant income and support purification and charity disbursement.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "shariah_governance_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "charity"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 9,
+      "req_id": "2.3",
+      "section_code": "2",
+      "section_title": "Shariah Governance",
+      "mandatory": true,
+      "text": "The solution must provide an immutable audit trail suitable for internal and external Shariah audit.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "shariah_governance_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "audit trail",
+            "immutable"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 10,
+      "req_id": "2.4",
+      "section_code": "2",
+      "section_title": "Shariah Governance",
+      "mandatory": true,
+      "text": "Does the solution support the Hijri calendar for schedules and maturity dates in parallel with the Gregorian calendar?",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "product_overview_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Hijri"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 11,
+      "req_id": "3.1",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "Confirm dedicated data residency in India (AWS Mumbai) and in the EU, and AES-256 encryption at rest.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "security_whitepaper_v6"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Mumbai",
+            "ap-south-1"
+          ],
+          [
+            "AES-256"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Mockup headline case: supported, two citations, zero conflicts"
+      }
+    },
+    {
+      "order": 12,
+      "req_id": "3.2",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "State the RTO and RPO for production services and the date of the last disaster recovery test.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "dr_policy_v3",
+          "soc2_summary_2026",
+          "security_whitepaper_v4_2024",
+          "rfp_gulf_2024"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [
+          "conflicting"
+        ],
+        "must_not_flag": [],
+        "include": [
+          [
+            "1 hour",
+            "one hour",
+            "60 minutes",
+            "1-hour"
+          ],
+          [
+            "5 minutes",
+            "five minutes"
+          ]
+        ],
+        "exclude": [
+          "4 hours",
+          "four hours",
+          "30 minutes"
+        ],
+        "must_not_cite": [],
+        "note": "Newer evidence (1h/5m) conflicts with 2024 evidence (4h/30m): answer from newer, flag for SME"
+      }
+    },
+    {
+      "order": 13,
+      "req_id": "3.3",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "Confirm that the vendor currently holds ISO/IEC 27001 certification.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "certifications_register_2026",
+          "security_whitepaper_v4_2024"
+        ],
+        "status_in": [
+          "Not Complied",
+          "Partially Complied",
+          "Cannot Confirm"
+        ],
+        "must_flag": [
+          "conflicting"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [
+          "is ISO 27001 certified",
+          "holds ISO 27001 certification",
+          "currently certified",
+          "fully compliant"
+        ],
+        "must_not_cite": [],
+        "note": "2024 whitepaper says certified; 2026 register says expired. Must never claim current certification"
+      }
+    },
+    {
+      "order": 14,
+      "req_id": "3.4",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "Confirm that the vendor holds ISO 22301 business continuity certification.",
+      "expect": {
+        "triage": "clarify",
+        "ev": [],
+        "status_in": [
+          "Cannot Confirm"
+        ],
+        "must_flag": [
+          "missing"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "No evidence in the KB: clarification, not an invented answer"
+      }
+    },
+    {
+      "order": 15,
+      "req_id": "3.5",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "Confirm SOC 2 Type II attestation and annual third-party penetration testing.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          [
+            "soc2_summary_2026",
+            "certifications_register_2026"
+          ],
+          [
+            "pentest_summary_2026",
+            "certifications_register_2026"
+          ]
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "SOC 2"
+          ],
+          [
+            "penetration"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 16,
+      "req_id": "3.6",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "Confirm compliance with the GDPR and with India's Digital Personal Data Protection Act 2023.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "privacy_overview_2025"
+        ],
+        "status_in": [
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [
+          [
+            "GDPR"
+          ],
+          [
+            "DPDP",
+            "Digital Personal Data Protection"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "GDPR evidenced, DPDP attestation absent"
+      }
+    },
+    {
+      "order": 17,
+      "req_id": "3.7",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": false,
+      "text": "Confirm PCI DSS compliance where cardholder data is processed.",
+      "expect": {
+        "triage": "clarify",
+        "ev": [],
+        "status_in": [
+          "Cannot Confirm"
+        ],
+        "must_flag": [
+          "missing"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "No evidence in the KB"
+      }
+    },
+    {
+      "order": 18,
+      "req_id": "3.8",
+      "section_code": "3",
+      "section_title": "Security, Resilience and Compliance",
+      "mandatory": true,
+      "text": "Confirm that data residency in the UAE (AWS UAE region) will be available at go-live.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "data_residency_2026"
+        ],
+        "status_in": [
+          "Partially Complied",
+          "Not Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [
+          [
+            "Q1 2027",
+            "planned",
+            "not yet available",
+            "roadmap"
+          ]
+        ],
+        "exclude": [
+          "is available",
+          "generally available in the UAE"
+        ],
+        "must_not_cite": [],
+        "note": "Roadmap item must not be presented as available"
+      }
+    },
+    {
+      "order": 19,
+      "req_id": "4.1",
+      "section_code": "4",
+      "section_title": "Integration and Deployment",
+      "mandatory": true,
+      "text": "Describe the APIs available, including REST with OpenAPI, ISO 20022 messaging and event streaming.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "product_overview_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "REST",
+            "OpenAPI"
+          ],
+          [
+            "ISO 20022"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 20,
+      "req_id": "4.2",
+      "section_code": "4",
+      "section_title": "Integration and Deployment",
+      "mandatory": true,
+      "text": "Confirm support for private cloud or on-premises deployment on customer-managed Kubernetes.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "product_overview_v62"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "Kubernetes"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 21,
+      "req_id": "4.3",
+      "section_code": "4",
+      "section_title": "Integration and Deployment",
+      "mandatory": true,
+      "text": "Describe your AML/CFT screening capability.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "product_overview_v62"
+        ],
+        "status_in": [
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [
+          [
+            "integration",
+            "adapter"
+          ],
+          [
+            "third-party",
+            "third party"
+          ]
+        ],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Screening engine is not bundled"
+      }
+    },
+    {
+      "order": 22,
+      "req_id": "4.4",
+      "section_code": "4",
+      "section_title": "Integration and Deployment",
+      "mandatory": false,
+      "text": "Does the platform include native AI or machine-learning credit scoring models?",
+      "expect": {
+        "triage": "clarify",
+        "ev": [],
+        "status_in": [
+          "Cannot Confirm"
+        ],
+        "must_flag": [
+          "missing"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [
+          "ScoreIQ"
+        ],
+        "must_not_cite": [
+          "rfp_crescent_2026"
+        ],
+        "note": "Only a reuse-forbidden past response mentions it: must not leak, must not invent"
+      }
+    },
+    {
+      "order": 23,
+      "req_id": "5.1",
+      "section_code": "5",
+      "section_title": "Implementation and Support",
+      "mandatory": true,
+      "text": "State the typical implementation timeline for a full core banking migration.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sow_gulf_2023"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [
+          "stale"
+        ],
+        "must_not_flag": [],
+        "include": [
+          [
+            "11 months"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": "Only a 2023 SOW supports it: stale, SME to confirm"
+      }
+    },
+    {
+      "order": 24,
+      "req_id": "5.2",
+      "section_code": "5",
+      "section_title": "Implementation and Support",
+      "mandatory": true,
+      "text": "State the typical implementation timeline for an Islamic retail lending platform.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sow_alnoor_2025"
+        ],
+        "status_in": [
+          "Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "stale",
+          "conflicting",
+          "unsupported",
+          "missing"
+        ],
+        "include": [
+          [
+            "8 months"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": "Fresh SOW; customer name must be redacted"
+      }
+    },
+    {
+      "order": 25,
+      "req_id": "5.3",
+      "section_code": "5",
+      "section_title": "Implementation and Support",
+      "mandatory": true,
+      "text": "Provide 24x7 support response-time commitments by severity and the service credits that apply to availability.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [
+          "commercial"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "SLAs and credits are never auto-answered"
+      }
+    },
+    {
+      "order": 26,
+      "req_id": "5.4",
+      "section_code": "5",
+      "section_title": "Implementation and Support",
+      "mandatory": false,
+      "text": "Describe the training you provide to bank staff.",
+      "expect": {
+        "triage": "auto",
+        "ev": [
+          "sow_alnoor_2025"
+        ],
+        "status_in": [
+          "Complied",
+          "Partially Complied"
+        ],
+        "must_flag": [],
+        "must_not_flag": [
+          "unsupported"
+        ],
+        "include": [
+          [
+            "train-the-trainer",
+            "train the trainer"
+          ]
+        ],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 27,
+      "req_id": "6.1",
+      "section_code": "6",
+      "section_title": "Commercial and Legal",
+      "mandatory": true,
+      "text": "Provide pricing for licences and implementation services.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [
+          "commercial"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Pricing is never auto-answered"
+      }
+    },
+    {
+      "order": 28,
+      "req_id": "6.2",
+      "section_code": "6",
+      "section_title": "Commercial and Legal",
+      "mandatory": true,
+      "text": "State your limitation of liability and indemnity position.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [
+          "legal"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": "Liability and indemnity are never auto-answered"
+      }
+    },
+    {
+      "order": 29,
+      "req_id": "6.3",
+      "section_code": "6",
+      "section_title": "Commercial and Legal",
+      "mandatory": false,
+      "text": "Confirm your standard payment terms.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [
+          "commercial"
+        ],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [],
+        "must_not_cite": [],
+        "note": ""
+      }
+    },
+    {
+      "order": 30,
+      "req_id": "6.4",
+      "section_code": "6",
+      "section_title": "Commercial and Legal",
+      "mandatory": true,
+      "text": "Provide three named customer references with contact details.",
+      "expect": {
+        "triage": "owner",
+        "ev": [],
+        "status_in": null,
+        "must_flag": [],
+        "must_not_flag": [],
+        "include": [],
+        "exclude": [
+          "Gulf Islamic Bank",
+          "Al-Noor Finance",
+          "Pearl Investment Bank",
+          "Crescent Microfinance"
+        ],
+        "must_not_cite": [],
+        "note": "Named references need customer consent: owner, never the KB's customer names"
+      }
+    }
+  ]
+}
